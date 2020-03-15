@@ -1,17 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Flourish At Home</title>
-</head>
+{% extends 'base.html' %}
+{% block content %}
 <body>
+    <h1>Get Plants</h1>
+
+<!-- Fit each plant name into a dropdown menu -->
+    
     {% for plant in plants %}
+    <ul>
         {{plant.plant_name}}
-        {{plant.plant_description}}
+        <!-- {{plant.plant_description}}
         {{plant.plant_placement}}
-        {{plant.plant_care}}
-    {% endfor %}    
+        {{plant.plant_care}} -->
+    </ul>
+    {% endfor %}
+        
 </body>
-</html>
+{% endblock %}

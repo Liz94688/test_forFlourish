@@ -12,14 +12,33 @@ mongo = PyMongo(app)
 
 
 @app.route('/')
-@app.route('/get_record')
-def get_record():
-    return render_template("get_record.html")
+def welcome_page():
+    return render_template("welcome_page.html")
 
 
-@app.route('/get_plants')
-def get_plants():
-    return render_template("plants.html", plants=mongo.db.plants.find())
+@app.route('/register_user')
+def register_user():
+    return render_template("register_user.html")
+
+
+@app.route('/login_user')
+def login_user():
+    return render_template("login_user.html")
+
+
+@app.route('/user_record')
+def user_record():
+    return render_template("user_record.html")
+
+
+@app.route('/search_plants')
+def search_plants():
+    return render_template("search_plants.html", plants=mongo.db.plants.find())
+
+
+@app.route('/edit_record')
+def edit_record():
+    return render_template("edit_record.html")
 
 
 if __name__ == '__main__':

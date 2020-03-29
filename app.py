@@ -24,9 +24,9 @@ def welcome_page():
 
 # Form Class
 class RegisterForm(Form):
-    name = StringField('Name', [validators.Length(min=1, max=50)])
-    email = StringField('Email', [validators.Length(min=6, max=50)])
-    username = StringField('Username', [validators.Length(min=4, max=25)])
+    name = StringField('Name', [validators.DataRequired(), validators.Length(min=1, max=50)])
+    email = StringField('Email', [validators.DataRequired(), validators.Length(min=6, max=50)])
+    username = StringField('Username', [validators.DataRequired(), validators.Length(min=4, max=25)])
     password = PasswordField('Password', [
         validators.DataRequired(),
         validators.EqualTo('confirm', message='Passwords do not match')
@@ -40,9 +40,13 @@ def register_user():
     form = RegisterForm(request.form)
     # Check if POST or GET reguest
     if request.method == 'POST' and form.validate():
-        return render_template("register_user.html")
         # Register New User
-    return render_template("register_user.html", form=form)
+        users = mongo.db.users
+        # Need to include if username already exists
+        users.insert({'username': request.form['username'].lower()})
+        return redirect(url_for('user_account')
+
+    # return render_template("register_user.html", form=form)
 
 # Login
 @app.route('/login_user')

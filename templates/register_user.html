@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<br>
 <h1>Register</h1>
+<br>
 <!-- Create Form -->
 {% from "includes/_formhelpers.html" import render_field %}
 <form method="POST" action="">
@@ -15,6 +17,7 @@
 			{{ render_field(form.confirm, class="form-control") }}
 		</dl>
 	</div>
-	<p><input type="submit" class="btn btn-primary" value="Submit"></p>
+    <br>
+	<p><input type="submit" class="btn btn-success" value="Submit"></p>
 </form>
 {% endblock %}

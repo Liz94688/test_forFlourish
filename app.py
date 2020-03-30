@@ -4,12 +4,11 @@ from flask import Flask, render_template, flash, redirect, request, url_for, ses
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from wtforms import Form, BooleanField, StringField, TextAreaField, PasswordField, validators
-from passlib.hash import sha256_crypt
 
 # Declaring App Name
 app = Flask(__name__)
 
-# Configure Setting and Environmental Variables
+# Configure MongoDB
 app.config["MONGO_DBNAME"] = 'test_forFlourish'
 app.config["MONGO_URI"] = 'mongodb+srv://root:r00tUser@myfirstcluster-suguw.mongodb.net/test_forFlourish?retryWrites=true&w=majority'
 
@@ -24,9 +23,9 @@ def welcome_page():
 
 # Form Class
 class RegisterForm(Form):
-    name = StringField('Name', [validators.DataRequired(), validators.Length(min=1, max=50)])
-    email = StringField('Email', [validators.DataRequired(), validators.Length(min=6, max=50)])
-    username = StringField('Username', [validators.DataRequired(), validators.Length(min=4, max=25)])
+    name = StringField('Name', [validators.Length(min=1, max=50)])
+    email = StringField('Email', [validators.Length(min=6, max=50)])
+    username = StringField('Username', [validators.Length(min=4, max=25)])
     password = PasswordField('Password', [
         validators.DataRequired(),
         validators.EqualTo('confirm', message='Passwords do not match')
@@ -36,20 +35,26 @@ class RegisterForm(Form):
 # Register
 @app.route('/register_user', methods=['GET', 'POST'])
 def register_user():
-    # Create Form Variable
     form = RegisterForm(request.form)
-    # Check if POST or GET reguest
+    users = mongo.db.users
     if request.method == 'POST' and form.validate():
-        # Register New User
-        users = mongo.db.users
-        # Need to include if username already exists
-        users.insert({'username': request.form['username'].lower()})
-        return redirect(url_for('user_account')
+        # Check if the username already exists in the MongoDB collection
 
-    # return render_template("register_user.html", form=form)
+        # Insert input fields into MongoDB collection
+        users.insert({
+            'name': request.form['name'].lower(),
+            'email': request.form['email'].lower(),
+            'username': request.form['username'].lower(),
+            'password': request.form['password'].lower
+        })
+
+        # Message to acknowledge registration and redirect to url_for Login
+        
+        return redirect(url_for('login_user'))
+    return render_template('register_user.html', form=form)
 
 # Login
-@app.route('/login_user')
+@app.route('/login_user', methods=['GET' 'POST'])
 def login_user():
     return render_template("login_user.html")
 

@@ -4,6 +4,7 @@ from flask import Flask, render_template, flash, redirect, request, url_for, ses
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from wtforms import Form, BooleanField, StringField, TextAreaField, PasswordField, validators
+import logging
 
 # Declaring App Name
 app = Flask(__name__)
@@ -45,17 +46,31 @@ def register_user():
             'name': request.form['name'].lower(),
             'email': request.form['email'].lower(),
             'username': request.form['username'].lower(),
-            'password': request.form['password'].lower
+            'password': request.form['password'].lower()
         })
-
-        # Message to acknowledge registration and redirect to url_for Login
-        
+        # Message to acknowledge registration needed   
         return redirect(url_for('login_user'))
     return render_template('register_user.html', form=form)
 
-# Login
+# Login - doesn't work...
 @app.route('/login_user', methods=['GET' 'POST'])
 def login_user():
+    users = mongo.db.users
+    if request.method == 'POST':
+        # Get fields from form - need to include a password request
+        username_input = request.form['username']
+
+        # Get user from DB using username
+        result = users.find('username')
+
+        # Check results
+        if result > 0:
+            # Compare username in form field to username from DB
+            if username_input == result:
+                logging.info('Usernames matched')
+                return redirect(url_for('user_account'))
+            else:
+                logging.info('No user by that username')
     return render_template("login_user.html")
 
 # User Account

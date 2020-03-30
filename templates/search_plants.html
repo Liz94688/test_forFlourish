@@ -6,18 +6,20 @@
 	<h1>Search Plants</h1>
 	<hr>
 
-	<!-- Fit each plant name into a dropdown menu -->
-
-	<ul class="list-group">
-		{% for plant in plants %}
-		<li class="list-group-item list-group-item-info"><a href="{{plant.plant_name}}">{{plant.plant_name}}</a></li>        
-		<!-- <li class="list-group-item list-group-item-info"><a href="{{plant._id}}">{{plant._id}}</a></li>
-		<li class="list-group-item list-group-item-info">{{plant.plant_name}}</li>
-		<li class="list-group-item list-group-item-info">{{plant.plant_description}}</li>
-		<li class="list-group-item list-group-item-info">{{plant.plant_placement}}</li>
-		<li class="list-group-item list-group-item-info">{{plant.plant_care}}</li> -->
-		{% endfor %}
-	</ul>
+	<!-- List each plant available by plant_name -->
+	<div>
+		<ul class="list-group">
+			{% for plant in plants %}
+			<li class="list-group-item list-group-item-info"><a href="{{plant.plant_name}}">{{plant.plant_name}}</a>
+			</li>
+			<!-- <li class="list-group-item list-group-item-info"><a href="{{plant._id}}">{{plant._id}}</a></li>
+		    <li class="list-group-item list-group-item-info">{{plant.plant_name}}</li>
+		    <li class="list-group-item list-group-item-info">{{plant.plant_description}}</li>
+		    <li class="list-group-item list-group-item-info">{{plant.plant_placement}}</li>
+		    <li class="list-group-item list-group-item-info">{{plant.plant_care}}</li> -->
+			{% endfor %}
+		</ul>
+	</div>
 
 </body>
 {% endblock %}

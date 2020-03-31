@@ -4,7 +4,6 @@ from flask import Flask, render_template, flash, redirect, request, url_for, ses
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from wtforms import Form, BooleanField, StringField, TextAreaField, PasswordField, validators
-import logging
 
 # Declaring App Name
 app = Flask(__name__)
@@ -33,49 +32,75 @@ class RegisterForm(Form):
     ])
     confirm = PasswordField('Confirm Password')
 
-# Register
+# Register - POST is working URL_FOR is not working
 @app.route('/register_user', methods=['GET', 'POST'])
 def register_user():
     form = RegisterForm(request.form)
     users = mongo.db.users
     if request.method == 'POST' and form.validate():
-        # Check if the username already exists in the MongoDB collection
+        # Start a session using username
+        # session ['username'] = request.form['username']
 
-        # Insert input fields into MongoDB collection
+        # Insert input fields into MongoDB users collection
         users.insert({
             'name': request.form['name'].lower(),
             'email': request.form['email'].lower(),
             'username': request.form['username'].lower(),
             'password': request.form['password'].lower()
         })
-        # Message to acknowledge registration needed   
+        # Message to acknowledge registration needed
+        # flash('Registration complete. Please log in.', 'success')
+
+        # End session
+        # session.pop('usernam', None)
         return redirect(url_for('login_user'))
     return render_template('register_user.html', form=form)
 
-# Login - doesn't work...
-@app.route('/login_user', methods=['GET' 'POST'])
+# Login - URL_FOR doesn't work...
+@app.route('/login_user', methods=['GET', 'POST'])
 def login_user():
     users = mongo.db.users
     if request.method == 'POST':
-        # Get fields from form - need to include a password request
-        username_input = request.form['username']
+        # Start a session using username
+        # session ['username'] = request.form['username']
 
-        # Get user from DB using username
+        # Get fields from form - need to include a password request
+        username = request.form['username']
+        # password_input = request.form['password'] - need to research passwords
+
+        # Get user from DB using username or password_input
         result = users.find('username')
 
         # Check results
         if result > 0:
             # Compare username in form field to username from DB
-            if username_input == result:
+            if username == result:
                 logging.info('Usernames matched')
+                # Message to acknowledge registration needed
+                # flash('Log in complete', 'success')
+
+                # End session
+                # session.pop('username', None)
                 return redirect(url_for('user_account'))
             else:
+                error = 'Invalid username'
                 logging.info('No user by that username')
-    return render_template("login_user.html")
+                return render_template('login_user.html', error=error)
+        else:
+            logging.info('No user account')
+    return render_template('login_user.html')
+
+# Log out
+# @app.route('/logout')
+# def logout():
+    # Remove username from the session
+    # session.pop('username', None)
+    # flash('You are now logged out', 'success')
+    # return redirect(url_for('login_user'))
 
 # User Account
-@app.route('/user_account')
-def user_account():
+@app.route('/user_account/<account_name>', methods=['GET', 'POST'])
+def user_account(account_name):
     return render_template("user_account.html")
 
 # Search Plants
@@ -84,17 +109,16 @@ def search_plants():
     return render_template("search_plants.html", plants=mongo.db.plants.find())
 
 # Plant Record
-@app.route('/plant_record')
+@app.route('/plant_record', methods=['GET', 'POST'])
 def plant_record():
     return render_template("plant_record.html")
 
 # Edit User Plant Record
-@app.route('/edit_user_plant_record')
+@app.route('/edit_user_plant_record', methods=['GET', 'POST'])
 def edit_user_plant_record():
     return render_template("edit_user_plant_record.html")
 
 # Delete User Plant Record
-# Log Out
 
 
 if __name__ == '__main__':

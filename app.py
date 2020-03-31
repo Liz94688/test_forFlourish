@@ -58,30 +58,32 @@ def register_user():
 # Login - POST works but doesn't re-direct, as expected
 @app.route('/login_user', methods=['GET', 'POST'])
 def login_user():
-    users = mongo.db.users
     if request.method == 'POST':
         # Get form fields
         username_input = request.form['username']
         # password_input = request.form['password']
-
+        # import pdb
+        # pdb.set_trace()
+        users = mongo.db.users
         # Check username exists in database
-        user_result = users.find({
+        user_result = users.find_one({
             'username': request.form['username'].lower()
         })
         # Check results
-        if username_input == user_result:
-            logging.info('Usernames matched')
-            # Start a session using username
-            # session [logged_in] = True
-            # session ['username'] = username_input
+        if user_result:
+            if request.form['password'] == user_result['password']:
+                logging.info('Usernames matched')
+                # Start a session using username
+                session['logged_in'] = True
+                session['username'] = username_input
 
-            # Message to acknowledge registration successful
-            # flash('Log in complete', 'success')
+                # Message to acknowledge registration successful
+                # flash('Log in complete', 'success')
 
-            return redirect(url_for('user_account'))
-        else:
-            logging.info('No user registered under that username')
-            return render_template('login_user.html')
+                return redirect(url_for('user_account'))
+
+        logging.info('No user registered under that username')
+        return render_template('login_user.html')
             # End session
             # session.clear('username', None)
     return render_template('login_user.html')
@@ -100,13 +102,13 @@ def user_logged_in(f):
 
 
 # Log out
-# @app.route('/logout')
-# @user_logged_in
-# def logout():
+@app.route('/logout')
+@user_logged_in
+def logout():
     # Remove username from the session
-    # session.clear('username', None)
-    # flash('You are now logged out', 'success')
-    # return redirect(url_for('login_user'))
+    session.clear('username', None)
+    flash('You are now logged out', 'success')
+    return redirect(url_for('login_user'))
 
 # User Account
 @app.route('/user_account')
@@ -137,5 +139,5 @@ def edit_user_plant_record():
 
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
-    port=int(os.environ.get('PORT')),
-    debug=True) 
+            port=int(os.environ.get('PORT')),
+            debug=True)

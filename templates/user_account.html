@@ -3,7 +3,21 @@
 
 <body>
 	<br>
-	<h1>User Record <small> Welcome {{session.username}}</small></h1>
-	<hr>
+	<h1>Welcome<small> {{session.username}}</small></h1>
+	<br>
+    <a class="btn btn-success" href="/search_plants"> Seach plant database!</a>
+    <hr>
+
+	<div class="container">
+		<div class="row">
+			{% for record in users %}
+			<div class="col-md-4">
+				<h2>{{users.plant_name}}</h2>
+				<p>{{users.plant_description}}</p>
+				<p><a class="btn btn-secondary" href="#" role="button">Further information</a></p>
+			</div>
+            {% endfor %}
+		</div>
+	</div>
 </body>
 {% endblock %}

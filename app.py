@@ -5,7 +5,8 @@ from flask import (
     Flask, render_template, flash, redirect, request, url_for, session)
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
-from wtforms import Form, BooleanField, StringField, TextAreaField, PasswordField, validators
+from wtforms import (
+    Form, StringField, DateTimeField, TextAreaField, PasswordField, validators)
 from functools import wraps
 
 # Declaring App Name
@@ -36,7 +37,7 @@ class RegisterForm(Form):
     ])
     confirm = PasswordField('Confirm Password')
 
-# Register - POST is working URL_FOR is not working
+# Register
 @app.route('/register_user', methods=['GET', 'POST'])
 def register_user():
     form = RegisterForm(request.form)
@@ -50,26 +51,27 @@ def register_user():
             'password': request.form['password'].lower()
         })
         # Message to acknowledge registration needed
-        # flash('Registration complete. Please log in.', 'success')
+        flash('Registration complete. Please log in.', 'success')
 
         return redirect(url_for('login_user'))
     return render_template('register_user.html', form=form)
 
-# Login - POST works but doesn't re-direct, as expected
+# Login
 @app.route('/login_user', methods=['GET', 'POST'])
 def login_user():
     if request.method == 'POST':
-        # Get form fields
+        users = mongo.db.users
+        # Get username input from form field
         username_input = request.form['username']
         # password_input = request.form['password']
         # import pdb
         # pdb.set_trace()
-        users = mongo.db.users
+
         # Check username exists in database
         user_result = users.find_one({
             'username': request.form['username'].lower()
         })
-        # Check results
+        # Check username_input and user_result
         if user_result:
             if request.form['password'] == user_result['password']:
                 logging.info('Usernames matched')
@@ -78,14 +80,14 @@ def login_user():
                 session['username'] = username_input
 
                 # Message to acknowledge registration successful
-                # flash('Log in complete', 'success')
+                flash('Log in complete', 'success')
 
                 return redirect(url_for('user_account'))
 
         logging.info('No user registered under that username')
         return render_template('login_user.html')
-            # End session
-            # session.clear('username', None)
+        # End session
+        session.clear('username', None)
     return render_template('login_user.html')
 
 

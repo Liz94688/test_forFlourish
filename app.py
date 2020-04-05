@@ -9,8 +9,10 @@ from wtforms import (
     Form, StringField, DateTimeField, TextAreaField, PasswordField, validators)
 from functools import wraps
 
+
 # Declaring App Name
 app = Flask(__name__)
+
 
 # Configure MongoDB
 app.config["MONGO_DBNAME"] = 'test_forFlourish'
@@ -19,6 +21,7 @@ app.config['SECRET_KEY'] = 'florish123'
 
 mongo = PyMongo(app)
 
+
 # Welcome Page
 @app.route('/')
 @app.route('/welcome_page')
@@ -26,7 +29,7 @@ def welcome_page():
     return render_template("welcome_page.html")
 
 
-# Form Class
+# Register Form Class
 class RegisterForm(Form):
     name = StringField('Name', [validators.Length(min=1, max=50)])
     email = StringField('Email', [validators.Length(min=6, max=50)])
@@ -36,6 +39,7 @@ class RegisterForm(Form):
         validators.EqualTo('confirm', message='Passwords do not match')
     ])
     confirm = PasswordField('Confirm Password')
+
 
 # Register
 @app.route('/register_user', methods=['GET', 'POST'])
@@ -56,24 +60,25 @@ def register_user():
         return redirect(url_for('login_user'))
     return render_template('register_user.html', form=form)
 
+
 # Login
 @app.route('/login_user', methods=['GET', 'POST'])
 def login_user():
     if request.method == 'POST':
         users = mongo.db.users
-        # Get username input from form field
+        # Get username from input field
         username_input = request.form['username']
         # password_input = request.form['password']
         # import pdb
         # pdb.set_trace()
 
-        # Check username exists in database
-        user_result = users.find_one({
+        # Check username exists in user database
+        current_user = users.find_one({
             'username': request.form['username'].lower()
         })
         # Check username_input and user_result
-        if user_result:
-            if request.form['password'] == user_result['password']:
+        if current_user:
+            if current_user['password'] == request.form['password']:
                 logging.info('Usernames matched')
                 # Start a session using username
                 session['logged_in'] = True
@@ -85,9 +90,9 @@ def login_user():
                 return redirect(url_for('user_account'))
 
         logging.info('No user registered under that username')
-        return render_template('login_user.html')
         # End session
         session.clear('username', None)
+        return render_template('login_user.html')
     return render_template('login_user.html')
 
 
@@ -98,43 +103,59 @@ def user_logged_in(f):
         if 'logged_in' in session:
             return f(*args, **kwargs)
         else:
-            flash('Unauthorized, Please login', 'danger')
+            flash('Unauthorised access. Please login', 'danger')
             return redirect(url_for('login_user'))
     return decorator
 
 
-# Log out
+# Log user out
 @app.route('/logout')
 @user_logged_in
 def logout():
+    # Start a session using username
+    session['logged_in'] = False
     # Remove username from the session
-    session.clear('username', None)
+    session.clear()
     flash('You are now logged out', 'success')
-    return redirect(url_for('login_user'))
+    return redirect(url_for('welcome_page'))
+
 
 # User Account
 @app.route('/user_account')
 @user_logged_in
 def user_account():
-    return render_template("user_account.html")
+    return render_template("user_account.html", plants=mongo.db.plants.find())
 
-# Search Plants
-@app.route('/search_plants')
-@user_logged_in
-def search_plants():
-    return render_template("search_plants.html", plants=mongo.db.plants.find())
 
-# Plant Record
-@app.route('/plant_record')
+# Add Plant Record Form Class
+class AddPlantRecord(Form):
+    date_purchased = DateTimeField('Date Purchased', format='%d/%m/%y')
+    water_frequency = TextAreaField('Water Frequency')
+    notes_added = TextAreaField('Notes')
+
+# Add Plant Record
+@app.route('/add_plant_record', methods=['GET', 'POST'])
 @user_logged_in
-def plant_record():
-    return render_template("plant_record.html")
+def add_plant_record():
+    plants = mongo.db.plants.find({"_id": ['id']})
+    form = AddPlantRecord(request.form)
+    users_plant_records = mongo.db.users_plant_records
+    if request.method == 'POST':
+        users_plant_records.insert({
+            'date_purchased': request.form['date_purchased'].lower(),
+            'water_frequency': request.form['water_frequency'].lower(),
+            'notes_added': request.form['notes_added'].lower()
+        })
+        return redirect(url_for('user_account'))
+    return render_template("add_plant_record.html", form=form, plants=plants)
+
 
 # Edit User Plant Record
 @app.route('/edit_user_plant_record')
 @user_logged_in
 def edit_user_plant_record():
     return render_template("edit_user_plant_record.html")
+
 
 # Delete User Plant Record
 

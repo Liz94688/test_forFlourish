@@ -4,19 +4,47 @@
 <body>
 	<br>
 	<h1>Welcome<small> {{session.username}}</small></h1>
+	<hr>
+	<h3><small>Search for your new plant using the table below:</small></h3>
 	<br>
-    <a class="btn btn-success" href="/search_plants"> Seach plant database!</a>
-    <hr>
 
+    <!-- Table listing plant collection -->
+	<table class="table table-striped">
+		<thead class="thead-dark">
+			<tr>
+				<th>Reference</th>
+				<th>Plant Name</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for plant in plants %}
+			<tr>
+				<td>{{plant.plant_reference}}</td>
+				<td>{{plant.plant_name}}</td>
+				<td><a class="btn btn-success" href="{{ url_for('add_plant_record') }}">Add new plant!</a></td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+    <br>
+	<hr>
+
+    <!-- User Plant Records -->
 	<div class="container">
 		<div class="row">
-			{% for record in users %}
+			{% for record in users_plant_records %}
 			<div class="col-md-4">
-				<h2>{{users.plant_name}}</h2>
-				<p>{{users.plant_description}}</p>
-				<p><a class="btn btn-secondary" href="#" role="button">Further information</a></p>
+				<h2>{{users_plant_records.plant_name}}</h2>
+				<p>{{users_plant_records.description}}</p>
+				<p>{{users_plant_records.placement}}</p>
+				<p>{{users_plant_records.plant_care}}</p>
+				<p>{{users_plant_records.date_purchased}}</p>
+				<p>{{users_plant_records.water_frequency}}</p>
+				<p>{{users_plant_records.notes_added}}</p>
+				<!-- <p><a class="btn btn-secondary" href="#" role="button">Further information</a></p> -->
 			</div>
-            {% endfor %}
+			{% endfor %}
 		</div>
 	</div>
 </body>

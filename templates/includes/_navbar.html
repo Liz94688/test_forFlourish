@@ -1,16 +1,16 @@
 <nav class="navbar navbar-nav navbar-dark bg-dark">
 	<div class="container">
 		<ul class="nav navbar-nav">
-			<li><a class="navbar-brand" href="/welcome_page">Flourish At Home</a></li>
+			<li><a class="navbar-brand" href="{{ url_for('welcome_page') }}">Flourish At Home</a></li>
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
 			<!-- Test if user is logged in -->
 			{% if session.logged_in %}
-                <li><a href="/user_account">My Account</a></li>
-			    <li><a href="/logout_user">Logout</a></li>
+                <li><a href="{{ url_for('user_account') }}">My Account</a></li>
+			    <li><a href="{{ url_for('logout') }}">Logout</a></li>
             {% else %}
-			    <li><a href="/register_user">Register</a></li>
-			    <li><a href="/login_user">Login</a></li>
+			    <li><a href="{{ url_for('register_user') }}">Register</a></li>
+			    <li><a href="{{ url_for('login_user') }}">Login</a></li>
             {% endif %}
 		</ul>
 	</div>

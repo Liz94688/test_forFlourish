@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+<br>
+<h1>Add Your Plant</h1>
+<hr>
+<!-- Place the specific information for chosen plant here first -->
+<div>
+	<ul class="list-group">
+		{% for plant in plants %}
+		<li class="list-group-item list-group-item-info">{{plant.plant_name}}</li>
+		<li class="list-group-item list-group-item-info">{{plant.plant_description}}</li>
+		<li class="list-group-item list-group-item-info">{{plant.plant_placement}}</li>
+		<li class="list-group-item list-group-item-info">{{plant.plant_care}}</li>		    
+		{% endfor %}
+	</ul>
+</div>
+
+<!-- Create Form -->
+		{% from "includes/_formhelpers.html" import render_field %}
+		<form method="POST" action="{{ url_for('add_plant_record') }}">
+			<div class="form-group">
+				<!-- WTForm syntax -->
+				<dl>
+					{{ render_field(form.date_purchased, class="form-control") }}
+					{{ render_field(form.water_frequency, class="form-control") }}
+					{{ render_field(form.notes_added, class="form-control") }}
+				</dl>
+			</div>
+			<br>
+			<p><input type="submit" class="btn btn-success" value="Submit"></p>
+		</form>
+
+		{% endblock %}

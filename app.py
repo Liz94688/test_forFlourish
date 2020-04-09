@@ -1,6 +1,7 @@
 # Importing Modules
 import os
 import logging
+from datetime import datetime
 from flask import (
     Flask, render_template, flash, redirect, request, url_for, session)
 from flask_pymongo import PyMongo
@@ -17,7 +18,7 @@ app = Flask(__name__)
 # Configure MongoDB
 app.config["MONGO_DBNAME"] = 'test_forFlourish'
 app.config["MONGO_URI"] = 'mongodb+srv://root:r00tUser@myfirstcluster-suguw.mongodb.net/test_forFlourish?retryWrites=true&w=majority'
-app.config['SECRET_KEY'] = 'florish123'
+app.config['SECRET_KEY'] = '314340f218da90b32caf021224f26824'
 
 mongo = PyMongo(app)
 
@@ -31,14 +32,22 @@ def welcome_page():
 
 # Register Form Class
 class RegisterForm(Form):
-    name = StringField('Name', [validators.Length(min=1, max=50)])
-    email = StringField('Email', [validators.Length(min=6, max=50)])
-    username = StringField('Username', [validators.Length(min=4, max=25)])
+    name = StringField('Name', [
+        validators.DataRequired(),
+        validators.Length(min=1, max=50)])
+    email = StringField('Email', [
+        validators.DataRequired(),
+        validators.Length(min=6, max=50)])
+    username = StringField('Username', [
+        validators.DataRequired(),
+        validators.Length(min=4, max=25)])
     password = PasswordField('Password', [
         validators.DataRequired(),
         validators.EqualTo('confirm', message='Passwords do not match')
     ])
-    confirm = PasswordField('Confirm Password')
+    confirm = PasswordField('Confirm Password', [
+        validators.DataRequired()
+    ])
 
 
 # Register
@@ -47,7 +56,7 @@ def register_user():
     form = RegisterForm(request.form)
     users = mongo.db.users
     if request.method == 'POST' and form.validate():
-        # Insert input fields into MongoDB users collection
+        # Insert input fields into users collection
         users.insert({
             'name': request.form['name'].lower(),
             'email': request.form['email'].lower(),
@@ -55,10 +64,10 @@ def register_user():
             'password': request.form['password'].lower()
         })
         # Message to acknowledge registration needed
-        flash('Registration complete. Please log in.', 'success')
+        flash(f'User account successfully registered for {form.username.data}', 'success')
 
         return redirect(url_for('login_user'))
-    return render_template('register_user.html', form=form)
+    return render_template('register_user.html', title='Register', form=form)
 
 
 # Login
@@ -79,21 +88,21 @@ def login_user():
         # Check username_input and user_result
         if current_user:
             if current_user['password'] == request.form['password']:
-                logging.info('Usernames matched')
+                logging.info('User information matches')
                 # Start a session using username
                 session['logged_in'] = True
                 session['username'] = username_input
 
                 # Message to acknowledge registration successful
                 flash('Log in complete', 'success')
-
                 return redirect(url_for('user_account'))
+        else:
+            logging.info('No user registered under that username')
+            # End session
+            session.clear()
+            flash('No user registered under that username', 'danger')
 
-        logging.info('No user registered under that username')
-        # End session
-        session.clear('username', None)
-        return render_template('login_user.html')
-    return render_template('login_user.html')
+    return render_template('login_user.html', title='Login')
 
 
 # Check user is logged in - decorator
@@ -124,12 +133,13 @@ def logout():
 @app.route('/user_account')
 @user_logged_in
 def user_account():
-    return render_template("user_account.html", plants=mongo.db.plants.find())
+    plants = mongo.db.plants.find()
+    return render_template("user_account.html", title='User Account', plants=plants)
 
 
 # Add Plant Record Form Class
 class AddPlantRecord(Form):
-    date_purchased = DateTimeField('Date Purchased', format='%d/%m/%y')
+    date_purchased = DateTimeField('Date Purchased', format='%d/%m/%Y')
     water_frequency = TextAreaField('Water Frequency')
     notes_added = TextAreaField('Notes')
 
@@ -137,7 +147,8 @@ class AddPlantRecord(Form):
 @app.route('/add_plant_record', methods=['GET', 'POST'])
 @user_logged_in
 def add_plant_record():
-    plants = mongo.db.plants.find({"_id": ['id']})
+    plants = mongo.db.plants.find()
+    # plant = mongo.db.plants.find_one({"_id": ObjectId(plant_id)})
     form = AddPlantRecord(request.form)
     users_plant_records = mongo.db.users_plant_records
     if request.method == 'POST':
@@ -147,14 +158,14 @@ def add_plant_record():
             'notes_added': request.form['notes_added'].lower()
         })
         return redirect(url_for('user_account'))
-    return render_template("add_plant_record.html", form=form, plants=plants)
+    return render_template("add_plant_record.html", title='Add Plant Record', plants=plants, form=form)
 
 
 # Edit User Plant Record
 @app.route('/edit_user_plant_record')
 @user_logged_in
 def edit_user_plant_record():
-    return render_template("edit_user_plant_record.html")
+    return render_template("edit_user_plant_record.html", title='Edit Plant Record')
 
 
 # Delete User Plant Record

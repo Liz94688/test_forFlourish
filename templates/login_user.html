@@ -4,17 +4,26 @@
 <h1>Log In</h1>
 <hr>
 <!-- Create Log In -->
-<form method="POST" action="{{ url_for('login_user') }}">
-    <div class="form-group">
-        <label>Username</label>
-        <input type="text" name="username" class="form-control" required autofocus>
-    </div>
-    <div class="form-group">
-        <label>Password</label>
-        <input type="password" name="password" class="form-control" required>
-    </div>
-    <button type="sumbit" class="btn btn-success">Submit</button>
-</form>
+<div class="container">
+    <form method="POST" action="{{ url_for('login_user') }}">
+        <fieldset class="form-group">
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" name="username" class="form-control" required autofocus>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" name="password" class="form-control" required>
+            </div>
+        </fieldset>
+        <div class="form-group">
+            <input type="submit" class="btn btn-outline-info" value="Submit">
+        </div>
+    </form>
+</div>
+<div class="container">
+    <small>Do you need a user account?</small><a class="ml-2" href="{{ url_for('register_user') }}">Register your account here</a>
+</div>
 <br>
-<em>Do you need a user account? </em><a href="/register_user">Register your account here</a>
+<hr>
 {% endblock %}

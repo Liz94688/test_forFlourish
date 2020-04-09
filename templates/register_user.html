@@ -5,18 +5,28 @@
 <hr>
 <!-- Create Form -->
 {% from "includes/_formhelpers.html" import render_field %}
-<form method="POST" action="">
-	<div class="form-group">
-		<!-- WTForm syntax -->
-		<dl>
-			{{ render_field(form.name, class="form-control") }}
-			{{ render_field(form.email, class="form-control") }}
-			{{ render_field(form.username, class="form-control") }}
-			{{ render_field(form.password, class="form-control") }}
-			{{ render_field(form.confirm, class="form-control") }}
-		</dl>
-	</div>
-    <br>
-	<p><input type="submit" class="btn btn-success" value="Submit"></p>
-</form>
+<div class="container">
+	<form method="POST" action="">
+		<fieldset class="form-group">
+			<div class="form-group">
+				<!-- WTForm syntax -->
+				<dl>
+					{{ render_field(form.name, class="form-control") }}
+					{{ render_field(form.email, class="form-control") }}
+					{{ render_field(form.username, class="form-control") }}
+					{{ render_field(form.password, class="form-control") }}
+					{{ render_field(form.confirm, class="form-control") }}
+				</dl>
+			</div>
+		</fieldset>
+        <div class="form-group">
+            <input type="submit" class="btn btn-outline-info" value="Submit">
+        </div>
+	</form>
+</div>
+<div class="container">
+    <small>Already registered?</small><a class="ml-2" href="{{ url_for('login_user') }}"> Log in here</a>
+</div>
+<br>
+<hr>
 {% endblock %}

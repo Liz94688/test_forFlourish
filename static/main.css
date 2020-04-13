@@ -1,2 +1,5 @@
+/* Styling the jumbatron for the user_account */
 
-
+h1.display-4 font-italic {
+    font-style: italic!important;
+}

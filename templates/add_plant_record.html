@@ -3,34 +3,33 @@
 <br>
 <h1>Add Your Plant</h1>
 <hr>
-<!-- Place the specific information for chosen plant here first -->
 <div class="container">
-	{% for plant in plants %}
-	<div class="card card-body col-12">
-		<h2 class="card-title">{{plant.plant_reference}}</h2>
-		<h5 class="card-subtitle"><em>{{plant.plant_name}}</em></h5>
+	<!-- Place the specific information for chosen plant here first -->
+	<div class="container">
+		<div class="card card-body col-12">
+			<h2 class="card-title">{{plant.plant_reference}}</h2>
+			<h5 class="card-subtitle"><em>{{plant.plant_name}}</em></h5>
+			<br>
+			<p class="col-12">{{plant.plant_description}}</p>
+			<p class="col-12">{{plant.plant_placement}}</p>
+			<p class="col-12">{{plant.plant_care}}</p>
+		</div>
 		<br>
-		<p class="col-12">{{plant.plant_description}}</p>
-		<p class="col-12">{{plant.plant_placement}}</p>
-		<p class="col-12">{{plant.plant_care}}</p>
-	</div>
-	<br>
-    {% endfor %}
-</div>
-
-<!-- Create Form -->
-<div class="container">
-    {% from "includes/_formhelpers.html" import render_field %}
-    <form method="POST" action="{{ url_for('add_plant_record') }}">
-        <div class="form-group">
-            <dl>
-                {{ render_field(form.date_purchased, class="form-control") }}
-                {{ render_field(form.water_frequency, class="form-control") }}
-                {{ render_field(form.notes_added, class="form-control") }}
-            </dl>
-        </div>
-        <br>
-        <p><input type="submit" class="btn btn-success" value="Submit"></p>
-    </form>
+    </div>
+	<!-- Create Form -->
+    <div class="container">
+        {% from "includes/_formhelpers.html" import render_field %}
+        <form method="POST" action="{{ url_for('add_plant_record', plant_id=plant._id) }}">
+            <div class="form-group">
+                <dl>
+                    {{ render_field(form.date_purchased, class="form-control") }}
+                    {{ render_field(form.water_frequency, class="form-control") }}
+                    {{ render_field(form.notes_added, class="form-control") }}
+                </dl>
+            </div>
+            <br>
+            <p><input type="submit" class="btn btn-outline-info" value="Submit"></p>
+        </form>
+    </div>
 </div>
 {% endblock %}

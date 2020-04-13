@@ -29,11 +29,12 @@
 <hr>
 
 <!-- User Plant Record Heading -->
-<div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
+<div class="jumbotron p-4 p-md-5 text-center text-white rounded bg-dark">
 	<div class="col-12 px-0">
 		<h1 class="display-4 font-italic">Check out your personalised plant records!</h1>
+        <br>
 		<p class="lead my-1 p-2">Each plant record has been created by you and can be
-			updated or amended to suit you using the buttons provided.</p>
+			updated or amended using the buttons provided.</p>
 	</div>
 </div>
 
@@ -44,11 +45,19 @@
 		<div
 			class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
 			<div class="col p-4 d-flex flex-column position-static">
-				<h3 class="mb-4">Plant Reference</h3>
-				<div class="mb-2 text-muted">Plant Name</div>
-				<p class="card-text mb-auto">Date purchased: {{record.date_purchased}}</p>
-				<p class="card-text mb-auto">Water Frequency: {{record.water_frequency}}</p>
+				<h3 class="mb-2">{{record.plant.plant_reference}}</h3>
+				<div class="mb-4 text-muted">{{record.plant.plant_name}}</div>
+				<p class="card-text mb-4">{{record.plant.plant_description}}</p>
+				<!-- <p class="card-text mb-auto">Placement: {{record.plant.plant_placement}}</p> -->
+				<p class="card-text mb-4">Care: {{record.plant.plant_care}}</p>
+				<p class="card-text mb-auto">Purchased on {{record.date_purchased}}</p>
+				<p class="card-text mb-4">Water {{record.water_frequency}}</p>
 				<p class="card-text mb-auto">Notes: {{record.notes_added}}</p>
+				<br>
+				<div>
+					<a class="btn btn-outline-info" href="{{ url_for('edit_user_plant_record') }}">Edit</a>
+					<a class="btn btn-outline-info" href="#">Delete</a>
+				</div>
 				<!-- <a href="#" class="stretched-link">Continue reading</a> -->
 			</div>
 		</div>

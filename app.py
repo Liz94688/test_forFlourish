@@ -62,7 +62,6 @@ def register_user():
             'username': request.form['username'].lower(),
             'password': request.form['password'].lower()
         })
-        # Message to acknowledge registration needed
         flash(
             f'User account successfully registered for {form.username.data}', 'success')
 
@@ -116,7 +115,7 @@ def user_logged_in(f):
             return redirect(url_for('login_user'))
     return decorator
 
-
+# Authenticate user
 @user_logged_in
 def get_authenticated_user():
     return session['username']
@@ -126,9 +125,7 @@ def get_authenticated_user():
 @app.route('/logout')
 @user_logged_in
 def logout():
-    # Start a session using username
     session['logged_in'] = False
-    # Remove username from the session
     session.clear()
     flash('You are now logged out', 'success')
     return redirect(url_for('welcome_page'))
@@ -139,8 +136,8 @@ def logout():
 @user_logged_in
 def user_account():
     plants = mongo.db.plants.find()
-    user = get_authenticated_user()
-    records = mongo.db.users_plant_records.find()
+    # user = get_authenticated_user()
+    records = mongo.db.users_plant_records.find({"user": session['username']})
     return render_template("user_account.html", title='User Account', plants=plants, records=records)
 
 
@@ -165,12 +162,16 @@ def add_plant_record(plant_id):
             'plant': {
                 '_id': plant['_id'],
                 'plant_reference': plant['plant_reference'],
-                'plant_name': plant['plant_name']
+                'plant_name': plant['plant_name'],
+                'plant_description': plant['plant_description'],
+                'plant_placement': plant['plant_placement'],
+                'plant_care': plant['plant_care']
             },
             'date_purchased': request.form['date_purchased'].lower(),
             'water_frequency': request.form['water_frequency'].lower(),
             'notes_added': request.form['notes_added'].lower()
         })
+        flash('Plant recorded successfully', 'success')
         return redirect(url_for('user_account'))
     else:
         form = AddPlantRecord(request.form)
@@ -181,12 +182,14 @@ def add_plant_record(plant_id):
 @app.route('/edit_user_plant_record', methods=["GET", "POST"])
 @user_logged_in
 def edit_user_plant_record():
-    records = mongo.db.users_plant_records.find()
-    return render_template("edit_user_plant_record.html", title='Edit Plant Record', records=records)
+    return render_template("edit_user_plant_record.html", title='Edit Plant Record')
 
 
 # Delete User Plant Record
-
+@app.route('/delete_user_plant_record', methods=["GET", "POST"])
+@user_logged_in
+def delete_user_plant_record():
+    return render_template("delete_user_plant_record.html", title='Delete Plant Record')
 
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),

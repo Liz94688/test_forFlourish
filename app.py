@@ -6,7 +6,8 @@ from flask import (
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from wtforms import (
-    Form, StringField, DateTimeField, TextAreaField, PasswordField, validators)
+    Form, StringField, DateField, TextAreaField, PasswordField, SelectField)
+from wtforms.validators import DataRequired, Length, EqualTo, Email
 from functools import wraps
 
 
@@ -32,20 +33,17 @@ def welcome_page():
 # Register Form Class
 class RegisterForm(Form):
     name = StringField('Name', [
-        validators.DataRequired(),
-        validators.Length(min=1, max=50)])
+        DataRequired(), Length(min=1, max=50)])
     email = StringField('Email', [
-        validators.DataRequired(),
-        validators.Length(min=6, max=50)])
+        Email(message='Not a valid email address.'),
+        DataRequired()])
     username = StringField('Username', [
-        validators.DataRequired(),
-        validators.Length(min=4, max=25)])
+        DataRequired(), Length(min=4, max=25)])
     password = PasswordField('Password', [
-        validators.DataRequired(),
-        validators.EqualTo('confirm', message='Passwords do not match')
+        DataRequired(message='Please enter a password')
     ])
     confirm = PasswordField('Confirm Password', [
-        validators.DataRequired()
+        EqualTo('password', message='Passwords must match')
     ])
 
 
@@ -135,16 +133,22 @@ def logout():
 @app.route('/user_account', methods=["GET", "POST"])
 @user_logged_in
 def user_account():
+    # Find all plants in plant collection
     plants = mongo.db.plants.find()
-    # user = get_authenticated_user()
+    # Pull records only created by the logged in user
     records = mongo.db.users_plant_records.find({"user": session['username']})
     return render_template("user_account.html", title='User Account', plants=plants, records=records)
 
 
 # Add Plant Record Form Class
 class AddPlantRecord(Form):
-    date_purchased = DateTimeField('Date Purchased', format='%d/%m/%Y')
-    water_frequency = TextAreaField('Water Frequency')
+    date_purchased = DateField('Date Purchased', format='%d/%m/%Y')
+    water_frequency = SelectField('Water Frequency', choices=[
+            ('Blank', ''),
+            ('Daily', 'Daily'),
+            ('Weekly', 'Weekly'),
+            ('Fortnightly', 'Fortnightly'),
+            ('Monthly', 'Monthly')])
     notes_added = TextAreaField('Notes')
 
 # Add Plant Record
@@ -179,10 +183,11 @@ def add_plant_record(plant_id):
 
 
 # Edit User Plant Record
-@app.route('/edit_user_plant_record', methods=["GET", "POST"])
+@app.route('/edit_user_plant_record/<record_id>', methods=["GET", "POST"])
 @user_logged_in
-def edit_user_plant_record():
-    return render_template("edit_user_plant_record.html", title='Edit Plant Record')
+def edit_user_plant_record(record_id):
+    record = mongo.db.users_plant_records.find_one({"_id": ObjectId(record_id)})
+    return render_template("edit_user_plant_record.html", title='Edit Plant Record', record=record)
 
 
 # Delete User Plant Record

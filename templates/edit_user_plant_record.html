@@ -4,12 +4,21 @@
 <h1>Edit Plant Record</h1>
 <hr>
 <div class="container">
-	<div class="row">
-        {% for record in records %}
-            <div class="col-md-4">
-                <h2>{{record.user}}</h2>
-                <!-- <p><a class="btn btn-secondary" href="#" role="button">Further information</a></p> -->
-            </div>
-        {% endfor %}
-	</div>
+	<div class="container">
+		<div class="card card-body col-12">
+			<h2 class="card-title">{{record.plant.plant_reference}}</h2>
+			<h5 class="card-subtitle"><em>{{record.plant.plant_name}}</em></h5>
+			<br>
+			<p class="col-12">{{record.plant.plant_description}}</p>
+			<p class="col-12">{{record.plant.plant_placement}}</p>
+			<p class="col-12">{{record.plant.plant_care}}</p>
+		</div>
+		<br>
+    </div>
+
+<!-- Include  -->
+    <div class="container">
+    
+    </div>
+</div>
 {% endblock %}

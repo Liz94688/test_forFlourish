@@ -1,3 +1,14 @@
+/* Navbar */
+.navbar {
+    background-color: #005059;
+    text-decoration-color: white;
+}
+
+/* Base
+body {
+    background-color: #7AC9D0;
+} */
+
 /* Styling the jumbatron for the user_account */
 
 h1.display-4 font-italic {

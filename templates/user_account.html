@@ -26,7 +26,6 @@
 			{% endfor %}
 		</tbody>
 	</table>
-	<br>
 	<hr>
 
 	<!-- User Plant Record Heading -->
@@ -43,8 +42,7 @@
 	<div class="row mb-2">
 		{% for record in records %}
 		<div class="col-md-6">
-			<div
-				class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+			<div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
 				<div class="col p-4 d-flex flex-column position-static">
 					<h3 class="mb-2">{{record.plant.plant_reference}}</h3>
 					<div class="mb-4 text-muted">{{record.plant.plant_name}}</div>

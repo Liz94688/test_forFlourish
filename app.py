@@ -187,6 +187,11 @@ def add_plant_record(plant_id):
 @user_logged_in
 def edit_user_plant_record(record_id):
     record = mongo.db.users_plant_records.find_one({"_id": ObjectId(record_id)})
+
+    # Get the form
+    # form = AddPlantRecord(request.form)
+
+    # Populate form fields
     return render_template("edit_user_plant_record.html", title='Edit Plant Record', record=record)
 
 

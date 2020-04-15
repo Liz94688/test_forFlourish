@@ -186,13 +186,33 @@ def add_plant_record(plant_id):
 @app.route('/edit_user_plant_record/<record_id>', methods=["GET", "POST"])
 @user_logged_in
 def edit_user_plant_record(record_id):
+    form = AddPlantRecord(request.form)
     record = mongo.db.users_plant_records.find_one({"_id": ObjectId(record_id)})
-
-    # Get the form
-    # form = AddPlantRecord(request.form)
-
     # Populate form fields
-    return render_template("edit_user_plant_record.html", title='Edit Plant Record', record=record)
+    if request.method == 'POST':
+        record.update({
+            'user': get_authenticated_user(),
+            'plant': {
+                '_id': record['_id'],
+                'plant_reference': record['plant_reference'],
+                'plant_name': record['plant_name'],
+                'plant_description': record['plant_description'],
+                'plant_placement': record['plant_placement'],
+                'plant_care': record['plant_care'],
+                'date_purchased': record['date_purchased']
+            },
+            'water_frequency': request.form['water_frequency'].lower(),
+            'notes_added': request.form['notes_added'].lower()
+        })
+        flash('Plant record edited successfully', 'success')
+        return redirect(url_for('user_account'))
+    return render_template("edit_user_plant_record.html", title='Edit Plant Record', record=record, form=form)
+
+
+
+
+
+    return render_template("edit_user_plant_record.html", title='Edit Plant Record', record=record, form=form)
 
 
 # Delete User Plant Record

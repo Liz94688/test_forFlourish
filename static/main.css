@@ -21,13 +21,12 @@ body {
     color: #EDF6F9;
 }
 
-/* Welcome page */
+/* Welcome */
 .jumbotron-welcome {
     text-align: center;
     background-color: #EDF6F9;
     border-radius: 1.1rem;
     margin-top: 1.5rem;
-    display: flex;
 }
 
 .jumbotron-welcome h1 {
@@ -114,12 +113,33 @@ body {
 }
 
 /* Plant Table */
-
-/* Jumbotron */
-.jumbotron-record-intro {
+.plant-summary {
+    border-radius: .8rem;
     background-color: #EDF6F9;
-    border-radius: 1.1rem;
-    margin-top: 1.5rem;
+}
+
+.plant-summary-header {
+    border-radius:  .8rem;
+    background-color: #005059;
+}
+
+.plant-summary-header th {
+    border-top: none;
+    border-bottom: none;
+    color: #EDF6F9;
+    font-weight: 200;
+}
+
+.add-plant {
+    color: #005059;
+    border-color: #005059;
+    font-weight: 400;
+}
+/* Jumbotron */
+.jumbotron-record-info {
+    background-color: #EDF6F9;
+    border-radius: 2rem;
+    margin-top: 1rem;
 }
 
 .jumbotron-record-info h1 {

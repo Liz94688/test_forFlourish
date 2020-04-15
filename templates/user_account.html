@@ -11,8 +11,8 @@
 <br>
 <div class="container">
 	<!-- Table listing plant collection -->
-	<table class="table table-striped">
-		<thead class="thead-dark">
+	<table class="table plant-summary">
+		<thead class="plant-summary-header">
 			<tr>
 				<th>Reference</th>
 				<th>Plant Name</th>
@@ -24,7 +24,7 @@
 			<tr>
 				<td>{{plant.plant_reference}}</td>
 				<td>{{plant.plant_name}}</td>
-				<td><a class="btn btn-outline-info" href="{{ url_for('add_plant_record', plant_id=plant._id) }}">Add new
+				<td><a class="btn btn-outline-info add-plant" href="{{ url_for('add_plant_record', plant_id=plant._id) }}">Add new
 						plant!</a></td>
 			</tr>
 			{% endfor %}

@@ -4,7 +4,7 @@
 <h1>Edit Plant Record</h1>
 <hr>
 <div class="container">
-<!-- First fill in the fields with the data already held -->
+    <!-- First fill in the fields with the data already held -->
 	<div class="container">
 		<div class="card card-body col-12">
 			<h2 class="card-title">{{record.plant.plant_reference}}</h2>
@@ -13,10 +13,23 @@
 			<p class="col-12">{{record.plant.plant_description}}</p>
 			<p class="col-12">{{record.plant.plant_placement}}</p>
 			<p class="col-12">{{record.plant.plant_care}}</p>
+            <p class="col-12">{{record.date_purchased}}</p>
 		</div>
 		<br>
     </div>
-
-    <div class="container"></div>
+    <!-- Pull in the remaining form fields to update -->
+    <div class="container">
+        {% from "includes/_formhelpers.html" import render_field %}
+        <form method="POST" action="/">
+            <div class="form-group">
+                <dl>
+                    {{ render_field(form.water_frequency, class="form-control") }}
+                    {{ render_field(form.notes_added, class="form-control") }}
+                </dl>
+            </div>
+            <br>
+            <p><input type="submit" class="btn btn-outline-info" value="Submit"></p>
+        </form>
+    </div>
 </div>
 {% endblock %}

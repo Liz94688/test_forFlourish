@@ -1,5 +1,22 @@
 /* Need to pick a font-family for everything... */
 
+/* Base */
+body {
+    background-color: #83C5BE;
+    color: #005059;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #005059;
+    padding: .9rem 1rem;
+    font-weight: 300;
+}
+
+.navbar-nav li a {
+    color: #EDF6F9;
+}
+
 /* Welcome page */
 .jumbotron-welcome {
     text-align: center;
@@ -11,7 +28,7 @@
 .jumbotron-welcome h1 {
     margin-top: 0.5rem;
     margin-bottom: 2.5rem;
-    font-weight: 600;
+    font-weight: 400;
 }
 
 .jumbotron-welcome p.about {
@@ -26,15 +43,58 @@
     font-size: large;
 }
 
-/* Navbar */
-.navbar {
-    background-color: #006D77;
+/* Register User */
+.register-header h1 {
+    color: #EDF6F9;
+    font-weight: 100;
 }
 
-/* Base */
-body {
-    background-color: #83C5BE;
+.register-form label {
+    font-weight: 200;
 }
+
+.register-submit {
+    color: #005059;
+    border-color: #005059;
+    font-weight: 400;
+}
+
+.login-info small, a.ml-2 {
+    font-weight: 400;
+}
+
+.login-info a.ml-2 {
+    color: #EDF6F9;
+    font-weight: 500;
+}
+
+/* Login User */
+.login-header h1 {
+    color: #EDF6F9;
+    font-weight: 100;
+}
+
+.login-form label {
+    font-weight: 200;
+}
+
+.login-submit {
+    color: #005059;
+    border-color: #005059;
+    font-weight: 400;
+}
+
+.register-info small, a.ml-2 {
+    font-weight: 400;
+}
+
+.register-info a.ml-2 {
+    color: #EDF6F9;
+    font-weight: 500;
+}
+
+/* User Account */
+
 
 /* Styling the jumbatron for the user_account */
 h1.display-4 font-italic {
@@ -53,3 +113,9 @@ h1.display-4 font-italic {
 .record-header {
     background-color: #006D77;
 }
+
+
+
+/* Add Plant */
+
+/* Edit Plant */

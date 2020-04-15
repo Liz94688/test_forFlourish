@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
 {% block content %}
 <br>
-<h1>Register</h1>
+<div class="container register-header">
+	<h1>Register</h1>
+</div>
 <hr>
 <!-- Create Form -->
 {% from "includes/_formhelpers.html" import render_field %}
-<div class="container">
+<div class="container register-form">
 	<form method="POST" action="">
 		<fieldset class="form-group">
 			<div class="form-group">
@@ -19,14 +21,13 @@
 				</dl>
 			</div>
 		</fieldset>
-        <div class="form-group">
-            <input type="submit" class="btn btn-outline-info" value="Submit">
+		<div class="form-group">
+			<input type="submit" class="btn btn-outline-info register-submit" value="Submit">
         </div>
 	</form>
 </div>
-<div class="container">
-    <small>Already registered?</small><a class="ml-2" href="{{ url_for('login_user') }}"> Log in here</a>
+<div class="container login-info">
+	<small>Already registered?<a class="ml-2" href="{{ url_for('login_user') }}">Log in here</a></small>
 </div>
-<br>
 <hr>
 {% endblock %}

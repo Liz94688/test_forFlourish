@@ -6,6 +6,10 @@ body {
     color: #005059;
 }
 
+.alert {
+    text-align: center;
+}
+
 /* Navbar */
 .navbar {
     background-color: #005059;
@@ -23,6 +27,7 @@ body {
     background-color: #EDF6F9;
     border-radius: 1.1rem;
     margin-top: 1.5rem;
+    display: flex;
 }
 
 .jumbotron-welcome h1 {
@@ -94,14 +99,44 @@ body {
 }
 
 /* User Account */
-
-
-/* Styling the jumbatron for the user_account */
-h1.display-4 font-italic {
-    font-style: italic!important;
+.user-account-header h1 {
+    color: #EDF6F9;
+    font-weight: 100;
+    text-align: center;
 }
 
-/* Styling each plant record */
+.user-account-info h3 {
+    color: #EDF6F9;
+    font-weight: 100;
+    margin-left: 15px;
+    margin-right: 15px;
+    text-align: center;
+}
+
+/* Plant Table */
+
+/* Jumbotron */
+.jumbotron-record-intro {
+    background-color: #EDF6F9;
+    border-radius: 1.1rem;
+    margin-top: 1.5rem;
+}
+
+.jumbotron-record-info h1 {
+    text-align: center;
+    font-style: italic;
+    font-weight: 300;
+    line-height: 1.2;
+}
+
+.jumbotron-record-info p {
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: 300;
+    margin-bottom: 0rem;
+}
+
+/* Plant Records */
 .table {
     background-color: #EDF6F9;
 }
@@ -113,8 +148,6 @@ h1.display-4 font-italic {
 .record-header {
     background-color: #006D77;
 }
-
-
 
 /* Add Plant */
 

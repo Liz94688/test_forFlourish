@@ -25,8 +25,9 @@ body {
 .jumbotron-welcome {
     text-align: center;
     background-color: #EDF6F9;
-    border-radius: 1.1rem;
+    border-radius: 2rem;
     margin-top: 1.5rem;
+    padding: 2rem 1rem;
 }
 
 .jumbotron-welcome h1 {
@@ -50,21 +51,32 @@ body {
 /* Register User */
 .register-header h1 {
     color: #EDF6F9;
-    font-weight: 100;
+    font-weight: 200;
+}
+
+.register-form {
+    background-color: #005059;
+    border-radius: 2rem;
+    padding: 20px;
 }
 
 .register-form label {
     font-weight: 200;
+    color: #EDF6F9;
 }
 
 .register-submit {
-    color: #005059;
-    border-color: #005059;
-    font-weight: 400;
+    color: #EDF6F9;
+    border-color: #EDF6F9;
+    font-weight: 500;
+}
+
+.login-info {
+    padding-top: 10px;
 }
 
 .login-info small, a.ml-2 {
-    font-weight: 400;
+    font-weight: 500;
 }
 
 .login-info a.ml-2 {
@@ -75,21 +87,32 @@ body {
 /* Login User */
 .login-header h1 {
     color: #EDF6F9;
-    font-weight: 100;
+    font-weight: 200;
+}
+
+.login-form {
+    background-color: #005059;
+    border-radius: 2rem;
+    padding: 20px;
 }
 
 .login-form label {
     font-weight: 200;
+    color: #EDF6F9;
 }
 
 .login-submit {
-    color: #005059;
-    border-color: #005059;
-    font-weight: 400;
+    color: #EDF6F9;
+    border-color: #EDF6F9;
+    font-weight: 500;
+}
+
+.register-info {
+    padding-top: 10px;
 }
 
 .register-info small, a.ml-2 {
-    font-weight: 400;
+    font-weight: 500;
 }
 
 .register-info a.ml-2 {
@@ -100,7 +123,7 @@ body {
 /* User Account */
 .user-account-header h1 {
     color: #EDF6F9;
-    font-weight: 100;
+    font-weight: 200;
     text-align: center;
 }
 
@@ -119,7 +142,7 @@ body {
 }
 
 .plant-summary-header {
-    border-radius:  .8rem;
+    border-radius:  .9rem;
     background-color: #005059;
 }
 
@@ -137,9 +160,12 @@ body {
 }
 /* Jumbotron */
 .jumbotron-record-info {
-    background-color: #EDF6F9;
+    background-color: #005059;
+    color: #EDF6F9;
     border-radius: 2rem;
     margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding: 2rem 1rem;
 }
 
 .jumbotron-record-info h1 {

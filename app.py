@@ -35,8 +35,7 @@ class RegisterForm(Form):
     name = StringField('Name', [
         DataRequired(), Length(min=1, max=50)])
     email = StringField('Email', [
-        Email(message='Not a valid email address.'),
-        DataRequired()])
+        Email(message='Not a valid email address.'), DataRequired()])
     username = StringField('Username', [
         DataRequired(), Length(min=4, max=25)])
     password = PasswordField('Password', [
@@ -72,11 +71,8 @@ def register_user():
 def login_user():
     if request.method == 'POST':
         users = mongo.db.users
-        # Get username from input field
         username_input = request.form['username']
         # password_input = request.form['password']
-        # import pdb
-        # pdb.set_trace()
 
         # Check username exists in user database
         current_user = users.find_one({
@@ -133,9 +129,7 @@ def logout():
 @app.route('/user_account', methods=["GET", "POST"])
 @user_logged_in
 def user_account():
-    # Find all plants in plant collection
     plants = mongo.db.plants.find()
-    # Pull records only created by the logged in user
     records = mongo.db.users_plant_records.find({"user": session['username']})
     return render_template("user_account.html", title='User Account', plants=plants, records=records)
 
@@ -156,7 +150,6 @@ class AddPlantRecord(Form):
 @user_logged_in
 def add_plant_record(plant_id):
     plant = mongo.db.plants.find_one({"_id": ObjectId(plant_id)})
-    # print(plant)
     # import pdb
     # pdb.set_trace()
     if request.method == 'POST':
@@ -209,17 +202,12 @@ def edit_user_plant_record(record_id):
     return render_template("edit_user_plant_record.html", title='Edit Plant Record', record=record, form=form)
 
 
-
-
-
-    return render_template("edit_user_plant_record.html", title='Edit Plant Record', record=record, form=form)
-
-
 # Delete User Plant Record
-@app.route('/delete_user_plant_record', methods=["GET", "POST"])
+@app.route('/delete_user_plant_record/<record_id>', methods=["GET", "POST"])
 @user_logged_in
-def delete_user_plant_record():
-    return render_template("delete_user_plant_record.html", title='Delete Plant Record')
+def delete_user_plant_record(record_id):
+    mongo.db.users_plant_records.remove({"_id": ObjectId(record_id)})
+    return redirect(url_for('user_account'))
 
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),

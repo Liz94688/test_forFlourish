@@ -8,6 +8,7 @@
 <div class="container user-account-info">
 	<h3>Search for your new plant using the table below:</h3>
 </div>
+<br>
 
 <div class="container">
 	<!-- Table listing plant collection -->
@@ -24,9 +25,7 @@
 			<tr>
 				<td>{{plant.plant_reference}}</td>
 				<td>{{plant.plant_name}}</td>
-				<td><a class="btn btn-outline-info add-plant"
-						href="{{ url_for('add_plant_record', plant_id=plant._id) }}">Add new
-						plant!</a></td>
+				<td><a class="btn btn-outline-info add-plant" href="{{ url_for('add_plant_record', plant_id=plant._id) }}">Add newplant!</a></td>
 			</tr>
 			{% endfor %}
 		</tbody>

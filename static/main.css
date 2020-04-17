@@ -58,21 +58,24 @@ body {
     background-color: #005059;
     border-radius: 2rem;
     padding: 20px;
+    margin-top: 25px;
+    margin-bottom: 10px;
 }
 
-.register-form label {
-    font-weight: 200;
-    color: #EDF6F9;
+.fieldset {
+    margin: 1rem;
 }
 
 .register-submit {
     color: #EDF6F9;
     border-color: #EDF6F9;
     font-weight: 500;
+    margin-left: 1rem;
 }
 
 .login-info {
     padding-top: 10px;
+    text-align: center;
 }
 
 .login-info small, a.ml-2 {
@@ -94,21 +97,23 @@ body {
     background-color: #005059;
     border-radius: 2rem;
     padding: 20px;
+    margin-top: 25px;
+    margin-bottom: 10px;
 }
 
-.login-form label {
-    font-weight: 200;
-    color: #EDF6F9;
+.fieldset-login {
+    margin: 1rem;
 }
-
 .login-submit {
     color: #EDF6F9;
     border-color: #EDF6F9;
     font-weight: 500;
+    margin-left: 1rem;
 }
 
 .register-info {
     padding-top: 10px;
+    text-align: center;
 }
 
 .register-info small, a.ml-2 {
@@ -179,7 +184,6 @@ body {
     text-align: center;
     font-size: 1.25rem;
     font-weight: 300;
-    margin-bottom: 0rem;
 }
 
 /* Plant Records */

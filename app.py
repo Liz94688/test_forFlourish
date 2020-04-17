@@ -30,40 +30,44 @@ def welcome_page():
     return render_template("welcome_page.html")
 
 
-# Register Form Class
-class RegisterForm(Form):
-    name = StringField('Name', [
-        DataRequired(), Length(min=1, max=50)])
-    email = StringField('Email', [
-        Email(message='Not a valid email address.'), DataRequired()])
-    username = StringField('Username', [
-        DataRequired(), Length(min=4, max=25)])
-    password = PasswordField('Password', [
-        DataRequired(message='Please enter a password')
-    ])
-    confirm = PasswordField('Confirm Password', [
-        EqualTo('password', message='Passwords must match')
-    ])
+# # Register Form Class
+# class RegisterForm(Form):
+#     name = StringField('Name', [
+#         DataRequired(), Length(min=1, max=50)])
+#     email = StringField('Email', [
+#         Email(message='Not a valid email address.'), DataRequired()])
+#     username = StringField('Username', [
+#         DataRequired(), Length(min=4, max=25)])
+#     password = PasswordField('Password', [
+#         DataRequired(message='Please enter a password')
+#     ])
+#     confirm = PasswordField('Confirm Password', [
+#         EqualTo('password', message='Passwords must match')
+#     ])
 
 
 # Register
 @app.route('/register_user', methods=['GET', 'POST'])
 def register_user():
-    form = RegisterForm(request.form)
     users = mongo.db.users
-    if request.method == 'POST' and form.validate():
-        # Insert input fields into users collection
-        users.insert({
-            'name': request.form['name'].lower(),
-            'email': request.form['email'].lower(),
-            'username': request.form['username'].lower(),
-            'password': request.form['password'].lower()
-        })
-        flash(
-            f'User account successfully registered for {form.username.data}', 'success')
+    if request.method == 'POST':
+        existing_user = users.find_one({'username': request.form['username'].lower()})
 
-        return redirect(url_for('login_user'))
-    return render_template('register_user.html', title='Register', form=form)
+        if not existing_user:
+            # Insert input fields into users collection
+            users.insert({
+                'name': request.form['name'].lower(),
+                'email': request.form['email'].lower(),
+                'username': request.form['username'].lower(),
+                'password': request.form['password'].lower()
+            })
+            flash('User account successfully registered', 'success')
+            return redirect(url_for('login_user'))
+
+        flash('Username already exists. Please try a different username', 'danger')
+        return render_template('register_user.html', title='Register')
+
+    return render_template('register_user.html', title='Register')
 
 
 # Login
@@ -73,24 +77,19 @@ def login_user():
         users = mongo.db.users
         username_input = request.form['username']
         # password_input = request.form['password']
-
-        # Check username exists in user database
+        
         current_user = users.find_one({
             'username': request.form['username'].lower()
         })
         # Check username_input and user_result
         if current_user:
             if current_user['password'] == request.form['password']:
-                logging.info('User information matches')
                 # Start a session using username
                 session['logged_in'] = True
                 session['username'] = username_input
-
-                # Message to acknowledge registration successful
                 flash('Log in complete', 'success')
                 return redirect(url_for('user_account'))
         else:
-            logging.info('No user registered under that username')
             # End session
             session.clear()
             flash('No user registered under that username', 'danger')
@@ -152,7 +151,7 @@ def add_plant_record(plant_id):
     plant = mongo.db.plants.find_one({"_id": ObjectId(plant_id)})
     # import pdb
     # pdb.set_trace()
-    if request.method == 'POST':
+    if request.method == 'POST'():
         users_plant_records = mongo.db.users_plant_records
         users_plant_records.insert({
             'user': get_authenticated_user(),
@@ -182,24 +181,25 @@ def edit_user_plant_record(record_id):
     form = AddPlantRecord(request.form)
     record = mongo.db.users_plant_records.find_one({"_id": ObjectId(record_id)})
     # Populate form fields
-    if request.method == 'POST':
+    if request.method == 'POST' and form.validate():
         record.update({
-            'user': get_authenticated_user(),
-            'plant': {
-                '_id': record['_id'],
-                'plant_reference': record['plant_reference'],
-                'plant_name': record['plant_name'],
-                'plant_description': record['plant_description'],
-                'plant_placement': record['plant_placement'],
-                'plant_care': record['plant_care'],
-                'date_purchased': record['date_purchased']
-            },
+            # 'user': get_authenticated_user(),
+            # 'plant': {
+            #     '_id': record['_id'],
+            #     'plant_reference': record['plant_reference'],
+            #     'plant_name': record['plant_name'],
+            #     'plant_description': record['plant_description'],
+            #     'plant_placement': record['plant_placement'],
+            #     'plant_care': record['plant_care'],
+            #     'date_purchased': record['date_purchased']
+            # },
             'water_frequency': request.form['water_frequency'].lower(),
             'notes_added': request.form['notes_added'].lower()
         })
         flash('Plant record edited successfully', 'success')
         return redirect(url_for('user_account'))
-    return render_template("edit_user_plant_record.html", title='Edit Plant Record', record=record, form=form)
+    return render_template("edit_user_plant_record.html", title='Edit Plant Record', record=record,
+        form=form)
 
 
 # Delete User Plant Record
@@ -208,6 +208,7 @@ def edit_user_plant_record(record_id):
 def delete_user_plant_record(record_id):
     mongo.db.users_plant_records.remove({"_id": ObjectId(record_id)})
     return redirect(url_for('user_account'))
+
 
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),

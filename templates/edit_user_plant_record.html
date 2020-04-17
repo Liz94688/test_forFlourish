@@ -19,26 +19,19 @@
 		</div>
 		<br>
     </div>
-		<!-- Pull in the remaining form fields to update -->
-		<div class="container">
-			{% from "includes/_formhelpers.html" import render_field %}
-			<form method="POST" action="/">
-				<div class="form-group">
-                    <!--{% for item in record %}
-                            {% if record.water_frequency == form.water_frequency %}
-                            {{ render_field(form.water_frequency, class="form-control") }}
-                            {% endif %}
-                        {% endfor %} -->
-					<!-- <dl>
-						{{ render_field(form.notes_added, class="form-control") }}
-					</dl> -->
-				</div>
-                <div class="form-group">
-
-                </div>
-				<br>
-				<p><input type="submit" class="btn btn-outline-info" value="Submit"></p>
-			</form>
-		</div>
-	</div>
-	{% endblock %}
+    <!-- Pull in the remaining form fields to update -->
+    <div class="container">
+        {% from "includes/_formhelpers.html" import render_field %}
+        <form method="POST" action="/">
+            <div class="form-group">
+                <dl>
+                    {{ render_field(form.water_frequency, class="form-control") }}
+                    {{ render_field(form.notes_added, class="form-control") }}
+                </dl>
+            </div>
+            <br>
+            <p><input type="submit" class="btn btn-outline-info" value="Submit"></p>
+        </form>
+    </div>
+</div>
+{% endblock %}

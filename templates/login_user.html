@@ -1,10 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
-<br>
 <div class="container login-header">
 	<h1>Log In</h1>
 </div>
-<hr>
 <!-- Create Log In -->
 <div class="container login-form">
 	<form method="POST" action="{{ url_for('login_user') }}">
@@ -20,9 +18,8 @@
 			<input type="submit" class="btn btn-outline-info login-submit" value="Submit">
         </div>
 	</form>
-</div>
-<div class="container register-info">
+    <div class="container register-info">
 	<small>Do you need a user account?<a class="ml-2" href="{{ url_for('register_user') }}">Register here</a></small>
+    </div>
 </div>
-<hr>
 {% endblock %}

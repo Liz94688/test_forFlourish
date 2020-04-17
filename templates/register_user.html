@@ -1,10 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
-<br>
 <div class="container register-header">
 	<h1>Register</h1>
 </div>
-<hr>
 <!-- Create Form -->
 <div class="container register-form">
 	<form method="POST" action="{{ url_for('register_user') }}">
@@ -26,9 +24,8 @@
             <input type="submit" class="btn btn-outline-info register-submit" value="Submit">
         </div>
 	</form>
-</div>
-<div class="container login-info">
+    <div class="container login-info">
 	<small>Already registered?<a class="ml-2" href="{{ url_for('login_user') }}">Log in here</a></small>
+    </div>
 </div>
-<hr>
 {% endblock %}

@@ -54,7 +54,6 @@ def register_user():
         existing_user = users.find_one({'username': request.form['username'].lower()})
 
         if not existing_user:
-            # Insert input fields into users collection
             users.insert({
                 'name': request.form['name'].lower(),
                 'email': request.form['email'].lower(),
@@ -107,6 +106,7 @@ def user_logged_in(f):
             flash('Unauthorised access. Please login', 'danger')
             return redirect(url_for('login_user'))
     return decorator
+
 
 # Authenticate user
 @user_logged_in

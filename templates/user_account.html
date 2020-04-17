@@ -1,36 +1,34 @@
 {% extends 'base.html' %}
 {% block content %}
-<br>
 <div class="container user-account-header">
 	<h1>Welcome<small> {{session.username}}</small></h1>
 </div>
-<hr>
+<hr class="user-account-styling">
 <div class="container user-account-info">
 	<h3>Search for your new plant using the table below:</h3>
 </div>
-<br>
 
 <div class="container">
-	<!-- Table listing plant collection -->
-	<table class="table plant-summary">
-		<thead class="plant-summary-header">
-			<tr>
-				<th>Reference</th>
-				<th>Plant Name</th>
-				<th></th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for plant in plants %}
-			<tr>
-				<td>{{plant.plant_reference}}</td>
-				<td>{{plant.plant_name}}</td>
-				<td><a class="btn btn-outline-info add-plant" href="{{ url_for('add_plant_record', plant_id=plant._id) }}">Add newplant!</a></td>
-			</tr>
-			{% endfor %}
-		</tbody>
-	</table>
-	<hr>
+		<!-- Table listing plant collection -->
+		<table class="table plant-summary plant-container">
+			<thead class="plant-summary-header">
+				<tr>
+					<th>Reference</th>
+					<th>Plant Name</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for plant in plants %}
+				<tr>
+					<td>{{plant.plant_reference}}</td>
+					<td>{{plant.plant_name}}</td>
+					<td><a class="btn btn-outline-info add-plant"
+							href="{{ url_for('add_plant_record', plant_id=plant._id) }}">Add</a></td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
 
 	<!-- User Plant Record Heading -->
 	<div class="jumbotron jumbotron-record-info">
@@ -41,7 +39,7 @@
 				updated or amended using the buttons provided.</p>
 		</div>
 	</div>
-    <hr>
+	<hr>
 
 	<!-- User Plant Records -->
 	<div class="row mb-2">
@@ -61,7 +59,8 @@
 					<br>
 					<div>
 						<a class="btn btn-outline-info" href="edit_user_plant_record/{{record._id}}">Edit</a>
-						<a class="btn btn-outline-danger" href="{{ url_for('delete_user_plant_record', record_id=record._id) }}">Delete</a>
+						<a class="btn btn-outline-danger"
+							href="{{ url_for('delete_user_plant_record', record_id=record._id) }}">Delete</a>
 					</div>
 					<!-- <a href="#" class="stretched-link">Continue reading</a> -->
 				</div>

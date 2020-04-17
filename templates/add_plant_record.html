@@ -1,35 +1,61 @@
 {% extends 'base.html' %}
 {% block content %}
-<br>
-<h1>Add Your Plant</h1>
-<hr>
-<div class="container">
-	<!-- Place the specific information for chosen plant here first -->
-	<div class="container">
-		<div class="card card-body col-12">
-			<h2 class="card-title">{{plant.plant_reference}}</h2>
-			<h5 class="card-subtitle"><em>{{plant.plant_name}}</em></h5>
-			<br>
-			<p class="col-12">{{plant.plant_description}}</p>
-			<p class="col-12">{{plant.plant_placement}}</p>
-			<p class="col-12">{{plant.plant_care}}</p>
-		</div>
-		<br>
-    </div>
-	<!-- Create Form -->
-    <div class="container">
-        {% from "includes/_formhelpers.html" import render_field %}
-        <form method="POST" action="{{ url_for('add_plant_record', plant_id=plant._id) }}">
-            <div class="form-group">
-                <dl>
-                    {{ render_field(form.date_purchased, class="form-control") }}
-                    {{ render_field(form.water_frequency, class="form-control") }}
-                    {{ render_field(form.notes_added, class="form-control") }}
-                </dl>
-            </div>
-            <br>
-            <p><input type="submit" class="btn btn-outline-info" value="Submit"></p>
-        </form>
-    </div>
+<div class="container add-plant-header">
+	<h1>Add Your Plant</h1>
 </div>
+<hr>
+
+<div class="container add-plant-body">
+	<!-- Place the specific information for chosen plant here first -->
+	<div class="row">
+		<div class="col-lg-4 col-sm-6 mb-4">
+			<div class="card h-100">
+				<div class="card-body">
+					<h2 class="card-title">{{plant.plant_reference}}</h2>
+					<h5 class="card-subtitle"><em>{{plant.plant_name}}</em></h5>
+					<br>
+					<p class="card-text">{{plant.plant_description}}</p>
+					<p class="card-text">{{plant.plant_placement}}</p>
+					<p class="card-text">{{plant.plant_care}}</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Create Form -->
+	<div class="container user-plant-input">
+		<form method="POST" action="{{ url_for('add_plant_record', plant_id=plant._id) }}" autocomplete="off">
+			<fieldset class="form-group fieldset-user-input">
+				<div class="form-group">
+                    <label for="date_purchased">Date Purchased</label>
+					<input type="date" name="date_purchased" class="form-control" placeholder="Date Purchased">
+                </div>
+                <div class="form-group">
+                    <label for="water_frequency">Water Frequency</label>
+                    <div>
+                        <input list="water_frequency">
+                        <datalist id="water_frequency">
+                            <option value="Just a little spray, now and again"></option>
+                            <option value="Daily"></option>
+                            <option value="Every other day"></option>
+                            <option value="Weekly"></option>
+                            <option value="Monthly"></option>
+                            <option value="Rarely"></option>
+                        </datalist>
+                    </div>
+                </div>
+				<div class="form-group">
+                    <label for="notes_added">Notes Added</label>
+                    <textarea type="text" name="notes_added" class="form-control" cols="30" rows="5"></textarea>
+                </div>
+			</fieldset>
+			<div class="form-group">
+				<input type="submit" class="btn btn-outline-info add-plant-submit" value="Submit">
+            </div>
+		</form>
+	</div>
+</div>
+
+<!-- <input type="text" name="water_frequency" class="form-control" placeholder="Water Frequency"> -->
+
+
 {% endblock %}

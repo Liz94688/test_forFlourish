@@ -75,8 +75,6 @@ def login_user():
     if request.method == 'POST':
         users = mongo.db.users
         username_input = request.form['username']
-        # password_input = request.form['password']
-        
         current_user = users.find_one({
             'username': request.form['username'].lower()
         })
@@ -134,24 +132,22 @@ def user_account():
 
 
 # Add Plant Record Form Class
-class AddPlantRecord(Form):
-    date_purchased = DateField('Date Purchased', format='%d/%m/%Y')
-    water_frequency = SelectField('Water Frequency', choices=[
-            ('Blank', ''),
-            ('Daily', 'Daily'),
-            ('Weekly', 'Weekly'),
-            ('Fortnightly', 'Fortnightly'),
-            ('Monthly', 'Monthly')])
-    notes_added = TextAreaField('Notes')
+# class AddPlantRecord(Form):
+#     date_purchased = DateField('Date Purchased', format='%d/%m/%Y')
+#     water_frequency = SelectField('Water Frequency', choices=[
+#             ('Blank', ''),
+#             ('Daily', 'Daily'),
+#             ('Weekly', 'Weekly'),
+#             ('Fortnightly', 'Fortnightly'),
+#             ('Monthly', 'Monthly')])
+#     notes_added = TextAreaField('Notes')
 
 # Add Plant Record
 @app.route('/add_plant_record/<plant_id>', methods=['GET', 'POST'])
 @user_logged_in
 def add_plant_record(plant_id):
     plant = mongo.db.plants.find_one({"_id": ObjectId(plant_id)})
-    # import pdb
-    # pdb.set_trace()
-    if request.method == 'POST'():
+    if request.method == 'POST' and form.validate():
         users_plant_records = mongo.db.users_plant_records
         users_plant_records.insert({
             'user': get_authenticated_user(),
@@ -169,9 +165,7 @@ def add_plant_record(plant_id):
         })
         flash('Plant recorded successfully', 'success')
         return redirect(url_for('user_account'))
-    else:
-        form = AddPlantRecord(request.form)
-    return render_template("add_plant_record.html", title='Add Plant Record', plant=plant, form=form)
+    return render_template("add_plant_record.html", title='Add Plant Record', plant=plant)
 
 
 # Edit User Plant Record

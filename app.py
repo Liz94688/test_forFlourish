@@ -30,22 +30,6 @@ def welcome_page():
     return render_template("welcome_page.html")
 
 
-# # Register Form Class
-# class RegisterForm(Form):
-#     name = StringField('Name', [
-#         DataRequired(), Length(min=1, max=50)])
-#     email = StringField('Email', [
-#         Email(message='Not a valid email address.'), DataRequired()])
-#     username = StringField('Username', [
-#         DataRequired(), Length(min=4, max=25)])
-#     password = PasswordField('Password', [
-#         DataRequired(message='Please enter a password')
-#     ])
-#     confirm = PasswordField('Confirm Password', [
-#         EqualTo('password', message='Passwords must match')
-#     ])
-
-
 # Register
 @app.route('/register_user', methods=['GET', 'POST'])
 def register_user():
@@ -131,23 +115,12 @@ def user_account():
     return render_template("user_account.html", title='User Account', plants=plants, records=records)
 
 
-# Add Plant Record Form Class
-# class AddPlantRecord(Form):
-#     date_purchased = DateField('Date Purchased', format='%d/%m/%Y')
-#     water_frequency = SelectField('Water Frequency', choices=[
-#             ('Blank', ''),
-#             ('Daily', 'Daily'),
-#             ('Weekly', 'Weekly'),
-#             ('Fortnightly', 'Fortnightly'),
-#             ('Monthly', 'Monthly')])
-#     notes_added = TextAreaField('Notes')
-
 # Add Plant Record
 @app.route('/add_plant_record/<plant_id>', methods=['GET', 'POST'])
 @user_logged_in
 def add_plant_record(plant_id):
     plant = mongo.db.plants.find_one({"_id": ObjectId(plant_id)})
-    if request.method == 'POST' and form.validate():
+    if request.method == 'POST':
         users_plant_records = mongo.db.users_plant_records
         users_plant_records.insert({
             'user': get_authenticated_user(),
@@ -172,28 +145,15 @@ def add_plant_record(plant_id):
 @app.route('/edit_user_plant_record/<record_id>', methods=["GET", "POST"])
 @user_logged_in
 def edit_user_plant_record(record_id):
-    form = AddPlantRecord(request.form)
     record = mongo.db.users_plant_records.find_one({"_id": ObjectId(record_id)})
-    # Populate form fields
-    if request.method == 'POST' and form.validate():
+    if request.method == 'POST':
         record.update({
-            # 'user': get_authenticated_user(),
-            # 'plant': {
-            #     '_id': record['_id'],
-            #     'plant_reference': record['plant_reference'],
-            #     'plant_name': record['plant_name'],
-            #     'plant_description': record['plant_description'],
-            #     'plant_placement': record['plant_placement'],
-            #     'plant_care': record['plant_care'],
-            #     'date_purchased': record['date_purchased']
-            # },
-            'water_frequency': request.form['water_frequency'].lower(),
-            'notes_added': request.form['notes_added'].lower()
-        })
+                'water_frequency': request.form['water_frequency'],
+                'notes_added': request.form['notes_added'].lower
+            })
         flash('Plant record edited successfully', 'success')
         return redirect(url_for('user_account'))
-    return render_template("edit_user_plant_record.html", title='Edit Plant Record', record=record,
-        form=form)
+    return render_template("edit_user_plant_record.html", title='Edit Plant Record', record=record)
 
 
 # Delete User Plant Record
@@ -201,6 +161,7 @@ def edit_user_plant_record(record_id):
 @user_logged_in
 def delete_user_plant_record(record_id):
     mongo.db.users_plant_records.remove({"_id": ObjectId(record_id)})
+    flash('Plant record successfully deleted', 'danger')
     return redirect(url_for('user_account'))
 
 

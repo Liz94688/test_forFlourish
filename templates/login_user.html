@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container login-header">
-	<h1>Log In</h1>
-</div>
 <!-- Create Log In -->
 <div class="container login-form">
+    <div class="container login-header">
+        <h1>Log In</h1>
+    </div>
 	<form method="POST" action="{{ url_for('login_user') }}" autocomplete="off">
 		<fieldset class="form-group fieldset-login">
 			<div class="form-group">

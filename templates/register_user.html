@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container register-header">
-	<h1>Register</h1>
-</div>
 <!-- Create Form -->
 <div class="container register-form">
+    <div class="container register-header">
+	    <h1>Register</h1>
+    </div>
 	<form method="POST" action="{{ url_for('register_user') }}" autocomplete="off">
 		<fieldset class="form-group fieldset">
             <div class="form-group">

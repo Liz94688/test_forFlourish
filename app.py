@@ -33,8 +33,8 @@ def welcome_page():
 # Register
 @app.route('/register_user', methods=['GET', 'POST'])
 def register_user():
-    users = mongo.db.users
     if request.method == 'POST':
+        users = mongo.db.users
         existing_user = users.find_one({'username': request.form['username'].lower()})
 
         if not existing_user:

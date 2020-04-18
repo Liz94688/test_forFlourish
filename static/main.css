@@ -1,7 +1,6 @@
 /* Base */
 body {
     background-color: #83C5BE;
-    color: #005059;
 }
 
 .alert {
@@ -195,7 +194,7 @@ body {
 .jumbotron-record-info {
     background-color: #005059;
     color: #EDF6F9;
-    border-radius: 2rem;
+    border-radius: 3rem;
     margin-top: 1rem;
     margin-bottom: 1rem;
     padding: 2rem 1rem;
@@ -215,21 +214,165 @@ body {
 }
 
 /* Plant Records */
-.table {
+.user-account-plant-record {
     background-color: #EDF6F9;
+    color: #005059;
+    border: 3px solid #005059;
 }
 
-.no-gutters>.col {
-    background-color: #EDF6F9;
+.user-plant-record {
+    border-radius: 2rem;
 }
 
-.record-header {
-    background-color: #006D77;
+.user-submit {
+    padding-top: 10px;
+    text-align: center;
+}
+
+.edit-submit {
+    color: #005059;
+    border-color: #005059;
+    font-weight: 500;
+}
+
+.delete-submit {
+    font-weight: 500;
 }
 
 /* Add Plant */
+.add-plant-body {
+    color: #EDF6F9;
+    background-color: #005059;
+    margin-top: 3rem;
+    margin-bottom: 2rem;
+    border-radius: 2rem;
+}
 
+.add-plant-header h1 {
+    margin: 0;
+    font-weight: 100;
+    padding: 1rem;
+    text-align: center;
+}
 
+.plant-data {
+    color: #006D77;
+    padding: 0px 20px;
+    margin-bottom: 0.5rem;
+}
 
+.card-body {
+    background-color: #EDF6F9;
+}
+
+.card-title {
+    font-weight: 300;
+}
+
+.card-subtitle {
+    font-weight: 200;
+    margin-bottom: 2rem;
+}
+
+p.card-text {
+    line-height: 1.5rem;
+    font-weight: 200;
+}
+
+.user-plant-input {
+    padding: 10px 25px;
+}
+
+.fieldset-user-input {
+    font-weight: 100;
+}
+
+.fieldset-user-input
+.form-control {
+    font-weight: 100;
+    color: #005059;
+    background-color: #EDF6F9;
+}
+
+.fieldset-user-input
+.form-control.date {
+    width: 60%;
+}
+
+.frequency-data {
+    background-color: #EDF6F9;
+    border-radius: .25rem;
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border: 1px solid #ced4da;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    width: 60%;
+}
+
+.fieldset-user-input
+.form-control.notes {
+    background-color: #EDF6F9;
+    height: calc(1.5em + .75rem + 6rem);
+}
+
+.add-plant-submit {
+    color: #EDF6F9;
+    border-color: #EDF6F9;
+    font-weight: 500;
+}
 
 /* Edit Plant */
+.edit-user-plant-record {
+    color: #EDF6F9;
+    background-color: #005059;
+    margin-top: 3rem;
+    margin-bottom: 2rem;
+    border-radius: 2rem;
+}
+
+.edit-header h2 {
+    margin: 0;
+    font-weight: 100;
+    padding: 1rem;
+    text-align: center;
+}
+
+.record-data {
+    color: #006D77;
+    padding: 0px 20px;
+    margin-bottom: 0.5rem;
+}
+
+.user-plant-edit {
+    padding: 10px 25px;
+}
+
+.fieldset-user-edit {
+    font-weight: 100;
+}
+
+.fieldset-user-edit
+.form-control {
+    font-weight: 100;
+    color: #005059;
+    background-color: #EDF6F9;
+}
+
+.fieldset-user-edit
+.form-control.date {
+    width: 60%;
+}
+
+.fieldset-user-input
+.form-control.edited-notes {
+    background-color: #EDF6F9;
+    height: calc(1.5em + .75rem + 6rem);
+}
+
+.edit-plant-submit {
+    color: #EDF6F9;
+    border-color: #EDF6F9;
+    font-weight: 500;
+}

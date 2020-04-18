@@ -32,10 +32,9 @@
 	<!-- User Plant Record Heading -->
 	<div class="jumbotron jumbotron-record-info">
 		<div class="col-12 px-0">
-			<h1>Check out your personalised plant records!</h1>
+			<h1>Keep informed with personalised plant records for each of your plants!</h1>
 			<br>
-			<p>Each plant record has been created by you and can be
-				updated or amended using the buttons provided.</p>
+			<p>Once added, each record will be stored below and can be accessed and update by you at any time.</p>
 		</div>
 	</div>
 
@@ -43,19 +42,16 @@
     <div class="row">
         {% for record in records %}
 		<div class="col-lg-4 col-sm-6 mb-4">
-			<div class="card h-100">
+			<div class="card h-100 user-account-plant-record">
 				<div class="card-body">
 					<h2 class="card-title">{{record.plant.plant_reference}}</h2>
 					<h5 class="card-subtitle"><em>{{record.plant.plant_name}}</em></h5>
-					<br>
 					<p class="card-text">{{record.plant.plant_description}}</p>
-                    <br>
 					<p class="card-text">{{record.water_frequency}}</p>
 					<p class="card-text">{{record.notes_added}}</p>
-                    <br>
-					<div>
-						<a class="btn btn-outline-info" href="edit_user_plant_record/{{record._id}}">Edit</a>
-						<a class="btn btn-outline-danger" href="{{ url_for('delete_user_plant_record', record_id=record._id) }}">Delete</a>
+					<div class="user-submit">
+						<a class="btn btn-outline-info edit-submit" href="edit_user_plant_record/{{record._id}}">Edit</a>
+						<a class="btn btn-outline-danger delete-submit" href="{{ url_for('delete_user_plant_record', record_id=record._id) }}">Delete</a>
 					</div>
 				</div>
 			</div>

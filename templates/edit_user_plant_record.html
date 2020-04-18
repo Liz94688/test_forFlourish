@@ -1,38 +1,32 @@
 {% extends 'base.html' %}
 {% block content %}
+<!-- Edit Plant -->
 <div class="container edit-user-plant-record">
-	<h1>Edit Plant Record</h1>
-</div>
-<hr>
-
-<div class="container edit_user-plant-record">
+    <div class="container edit-header">
+	    <h2>Edit Plant Record</h2>
+    </div>
 	<!-- First fill in the fields with the data already held -->
-	<div class="row">
-		<div class="col-lg-4 col-sm-6 mb-4">
-			<div class="card h-100">
-				<div class="card-body">
-					<h2 class="card-title">{{record.plant.plant_reference}}</h2>
-					<h5 class="card-subtitle"><em>{{record.plant.plant_name}}</em></h5>
-					<br>
-					<p class="card-text">{{record.plant.plant_description}}</p>
-					<p class="card-text">{{record.plant.plant_placement}}</p>
-					<p class="card-text">{{record.plant.plant_care}}</p>
-                    <p class="card-text">{{record.date_purchased}}</p>
-				</div>
-			</div>
-		</div>
+	<div class="container col-12 record-data">
+        <div class="card h-100">
+            <div class="card-body">
+                <h2 class="card-title">{{record.plant.plant_reference}}</h2>
+                <h5 class="card-subtitle"><em>{{record.plant.plant_name}}</em></h5>
+                <p class="card-text">{{record.plant.plant_description}}</p>
+                <p class="card-text">{{record.plant.plant_placement}}</p>
+                <p class="card-text">{{record.plant.plant_care}}</p>
+                <p class="card-text">Purchased on {{record.date_purchased}}</p>
+            </div>
+        </div>
 	</div>
-
     <!-- Pull in the remaining form fields to update -->
-    <div class="container user_edit">
+    <div class="container user-plant-edit">
 		<form method="POST" action="{{ url_for('edit_user_plant_record', record_id=record._id) }}">
 			<fieldset class="form-group fieldset-user-edit">
                 <div class="form-group">
                     <label for="water_frequency">Water Frequency</label>
                     <div>
-                        <input list="water_frequency" name="water_frequency" value="{{record.water_frequency}}">
+                        <input list="water_frequency" class="frequency-data" name="water_frequency" value="{{record.water_frequency}}">
                         <datalist id="water_frequency">
-                            <option value="Just a little spray, now and again"></option>
                             <option value="Daily"></option>
                             <option value="Every other day"></option>
                             <option value="Weekly"></option>
@@ -42,8 +36,8 @@
                     </div>
                 </div>
 				<div class="form-group">
-                    <label for="notes_added">Notes Added</label>
-                    <input type="text" name="notes_added" class="form-control" value="{{record.notes_added}}">
+                    <label for="notes_added">Notes</label>
+                    <input type="text" name="notes_added" class="form-control edited-notes" value="{{record.notes_added}}">
                 </div>
 			</fieldset>
 			<div class="form-group">

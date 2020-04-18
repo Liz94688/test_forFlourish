@@ -21,25 +21,24 @@
     <!-- Pull in the remaining form fields to update -->
     <div class="container user-plant-edit">
 		<form method="POST" action="{{ url_for('edit_user_plant_record', record_id=record._id) }}">
-			<fieldset class="form-group fieldset-user-edit">
-                <div class="form-group">
-                    <label for="water_frequency">Water Frequency</label>
-                    <div>
-                        <input list="water_frequency" class="frequency-data" name="water_frequency" value="{{record.water_frequency}}">
-                        <datalist id="water_frequency">
-                            <option value="Daily"></option>
-                            <option value="Every other day"></option>
-                            <option value="Weekly"></option>
-                            <option value="Monthly"></option>
-                            <option value="Rarely"></option>
-                        </datalist>
-                    </div>
+            <div class="form-group">
+                <label for="water_frequency">Water Frequency</label>
+                <div>
+                    <select class="form-control" name="water_frequency" id="water_frequency" required>
+                        {% for value in watering_frequency %}
+                            {% if record.water_frequency == value.lower() %}
+                                <option value="{{ value }}" selected>{{ value }}</option>
+                            {% else %}
+                                <option value="{{ value }}">{{ value }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
                 </div>
-				<div class="form-group">
-                    <label for="notes_added">Notes</label>
-                    <input type="text" name="notes_added" class="form-control edited-notes" value="{{record.notes_added}}">
-                </div>
-			</fieldset>
+            </div>
+            <div class="form-group">
+                <label for="notes_added">Notes</label>
+                <input type="text" name="notes_added" class="form-control edited-notes" value="{{record.notes_added}}">
+            </div>
 			<div class="form-group">
 				<input type="submit" class="btn btn-outline-info edit-plant-submit" value="Submit">
             </div>

@@ -1,17 +1,24 @@
-<nav class="navbar navbar-nav navbar-dark">
-	<div class="container">
-		<ul class="nav navbar-nav">
-			<li><a class="navbar-brand" href="{{ url_for('welcome_page') }}">Flourish At Home</a></li>
-		</ul>
-		<ul class="nav navbar-nav navbar-right">
-			<!-- Test if user is logged in -->
-			{% if session.logged_in %}
-                <li><a href="{{ url_for('user_account') }}">My Account</a></li>
-			    <li><a href="{{ url_for('logout') }}">Logout</a></li>
-            {% else %}
-			    <li><a href="{{ url_for('register_user') }}">Register</a></li>
-			    <li><a href="{{ url_for('login_user') }}">Login</a></li>
-            {% endif %}
-		</ul>
-	</div>
+<nav class="navbar navbar-expand-lg sticky-top navbar-dark">
+    <div class="container">
+        <a class="navbar-brand" href="{{ url_for('welcome_page') }}">Flourish At Home</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto ">
+            <!-- Test if user is logged in -->
+                {% if session.logged_in %}
+                    {% if session.is_admin %}
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('admin_account') }}">Plant Administration</a></li>
+                    {% endif %}
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('user_account') }}">My Account</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
+                {% else %}
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('register_user') }}">Register</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('login_user') }}">Login</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
 </nav>

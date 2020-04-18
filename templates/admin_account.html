@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="jumbotron admin-welcome">
+		<h1>Welcome to the Flourish At Home Administration Account</h1>
+	<hr>
+	<p class="about">This has been created to help assist you in adding any new plants onto the application, 
+        as well as updating any existing plants already record.</p>
+	<p class="admin_direction">Please start by choosing one of the options below.</p>
+    <div class="container add_plant">
+        <a class="btn btn-outline-info add-plant" href="{{ url_for('admin_add') }}">Add Plant</a>
+    </div>
+    <div class="container update_plant">
+        <a class="btn btn-outline-info add-plant" href="{{ url_for('admin_search') }}">Update Existing Plant</a>
+    </div>
+</div>
+{% endblock %}

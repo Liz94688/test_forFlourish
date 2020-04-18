@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
 		integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-	<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
 	<style id="compiled-css" type="text/css">
 		/* Set a background image by replacing the URL below */
@@ -32,11 +30,11 @@
 	{% include 'includes/_navbar.html' %}
 
 	{% with messages = get_flashed_messages(with_categories=true) %}
-	{% if messages %}
-	{% for category, message in messages %}
-	<div class="alert alert-{{ category }}">{{ message }}</div>
-	{% endfor %}
-	{% endif %}
+	    {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+	    {% endif %}
 	{% endwith %}
 
 	<div class="container">

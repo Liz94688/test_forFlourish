@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container admin_search">
+	<div class="container admin_search_header">
+		<h1>Search Existing Plants</h1>
+	</div>
+
+    <!-- Table listing plant collection -->
+    <div class="container">
+        <table class="table plant-summary plant-container">
+            <thead class="plant-summary-header">
+                <tr>
+                    <th>ID</th>
+                    <th>Reference</th>
+                    <th>Plant Name</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody class="plant-summary-body">
+                {% for plant in plants %}
+                <tr>
+                    <td>{{plant._id}}</td>
+                    <td>{{plant.plant_reference}}</td>
+                    <td>{{plant.plant_name}}</td>
+                    <td><a class="btn btn-outline-info add-plant"
+                            href="{{ url_for('admin_update', plant_id=plant._id) }}">Update</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

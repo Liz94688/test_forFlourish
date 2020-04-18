@@ -1,13 +1,9 @@
 # Importing Modules
 import os
-import logging
 from flask import (
     Flask, render_template, flash, redirect, request, url_for, session)
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
-from wtforms import (
-    Form, StringField, DateField, TextAreaField, PasswordField, SelectField)
-from wtforms.validators import DataRequired, Length, EqualTo, Email
 from functools import wraps
 
 
@@ -20,7 +16,51 @@ app.config["MONGO_DBNAME"] = 'test_forFlourish'
 app.config["MONGO_URI"] = 'mongodb+srv://root:r00tUser@myfirstcluster-suguw.mongodb.net/test_forFlourish?retryWrites=true&w=majority'
 app.config['SECRET_KEY'] = '314340f218da90b32caf021224f26824'
 
+WATERING_FREQUENCY = ("Daily", "Every other day", "Weekly", "Monthly", "Rarely")
+
 mongo = PyMongo(app)
+
+
+@app.route('/add_admin')
+def add_admin():
+    users = mongo.db.users
+    existing_user = users.find_one({'username': 'admin'})
+    if not existing_user:
+        # Password
+        users.insert({
+            'name': 'admin',
+            'email': 'admin@myself',
+            'username': 'admin',
+            'password': 'admin',
+            'is_admin': True
+        })
+        flash('User account successfully registered', 'success')
+        return redirect(url_for('login_user'))
+    return render_template("welcome_page.html")
+
+
+@app.route('/populate')
+def populate():
+    plants = [
+       {'plant_reference': 'plant_ref1', 'plant_name': 'plant_name', 'plant_description': 'plant_description', 'plant_placement': 'plant_placement', 'plant_care': 'plant_care'},
+       {'plant_reference': 'plant_ref2', 'plant_name': 'plant_name', 'plant_description': 'plant_description', 'plant_placement': 'plant_placement', 'plant_care': 'plant_care'},
+       {'plant_reference': 'plant_ref3', 'plant_name': 'plant_name', 'plant_description': 'plant_description', 'plant_placement': 'plant_placement', 'plant_care': 'plant_care'},
+       {'plant_reference': 'plant_ref4', 'plant_name': 'plant_name', 'plant_description': 'plant_description', 'plant_placement': 'plant_placement', 'plant_care': 'plant_care'},
+       {'plant_reference': 'plant_ref5', 'plant_name': 'plant_name', 'plant_description': 'plant_description', 'plant_placement': 'plant_placement', 'plant_care': 'plant_care'},
+       {'plant_reference': 'plant_ref6', 'plant_name': 'plant_name', 'plant_description': 'plant_description', 'plant_placement': 'plant_placement', 'plant_care': 'plant_care'},
+       {'plant_reference': 'plant_ref7', 'plant_name': 'plant_name', 'plant_description': 'plant_description', 'plant_placement': 'plant_placement', 'plant_care': 'plant_care'},
+    ]
+    for plant in plants:
+        plant_collection = mongo.db.plants
+        plant_collection.insert({
+            'plant_reference': plant['plant_reference'],
+            'plant_name': request.form['plant_name'],
+            'plant_description': request.form['plant_description'],
+            'plant_placement': request.form['plant_placement'],
+            'plant_care': request.form['plant_care']
+        })
+    flash('User account successfully registered', 'success')
+    return redirect(url_for('login_user'))
 
 
 # Welcome Page
@@ -35,14 +75,17 @@ def welcome_page():
 def register_user():
     if request.method == 'POST':
         users = mongo.db.users
-        existing_user = users.find_one({'username': request.form['username'].lower()})
+        username = request.form['username'].lower()
+        existing_user = users.find_one({'username': username})
 
         if not existing_user:
+            # Password
             users.insert({
-                'name': request.form['name'].lower(),
+                'name': request.form['name'],
                 'email': request.form['email'].lower(),
-                'username': request.form['username'].lower(),
-                'password': request.form['password'].lower()
+                'username': username,
+                'password': request.form['password'],
+                'is_admin': False
             })
             flash('User account successfully registered', 'success')
             return redirect(url_for('login_user'))
@@ -58,16 +101,17 @@ def register_user():
 def login_user():
     if request.method == 'POST':
         users = mongo.db.users
-        username_input = request.form['username']
-        current_user = users.find_one({
-            'username': request.form['username'].lower()
+        username = request.form['username'].lower()
+        user_record = users.find_one({
+            'username': username
         })
         # Check username_input and user_result
-        if current_user:
-            if current_user['password'] == request.form['password']:
+        if user_record:
+            if user_record['password'] == request.form['password']:
                 # Start a session using username
                 session['logged_in'] = True
-                session['username'] = username_input
+                session['username'] = username
+                session['is_admin'] = user_record['is_admin']
                 flash('Log in complete', 'success')
                 return redirect(url_for('user_account'))
         else:
@@ -96,6 +140,11 @@ def get_authenticated_user():
     return session['username']
 
 
+@user_logged_in
+def is_admin():
+    return session['is_admin']
+
+
 # Log user out
 @app.route('/logout')
 @user_logged_in
@@ -106,12 +155,65 @@ def logout():
     return redirect(url_for('welcome_page'))
 
 
+# Admin user only - account
+@app.route('/admin_account', methods=["GET", "POST"])
+@user_logged_in
+def admin_account():
+    return render_template("admin_account.html", title='Administration Account')
+
+
+# Admin user only - add plant
+@app.route('/admin_add', methods=["GET", "POST"])
+@user_logged_in
+def admin_add():
+    if request.method == 'POST':
+        plants = mongo.db.plants
+        plants.insert({
+            'plant_reference': request.form['plant_reference'],
+            'plant_name': request.form['plant_name'],
+            'plant_description': request.form['plant_description'],
+            'plant_placement': request.form['plant_placement'],
+            'plant_care': request.form['plant_care']
+        })
+        flash('Plant recorded successfully', 'success')
+        return redirect(url_for('admin_account'))
+    return render_template("admin_add.html", title="Add Plant")
+
+
+# Admin user only - search existing
+@app.route('/admin_search', methods=["GET", "POST"])
+@user_logged_in
+def admin_search():
+    plants = mongo.db.plants.find()
+    return render_template("admin_search.html", title='Search Plants', plants=plants)
+
+
+# Admin user only - update plant
+@app.route('/admin_update/<plant_id>', methods=["GET", "POST"])
+@user_logged_in
+def admin_update(plant_id):
+    plant_collection = mongo.db.plants
+    plant = plant_collection.find_one({"_id": ObjectId(plant_id)})
+    if request.method == 'POST':
+        plant.update({
+            'plant_reference': request.form['plant_reference'],
+            'plant_name': request.form['plant_name'],
+            'plant_description': request.form['plant_description'],
+            'plant_placement': request.form['plant_placement'],
+            'plant_care': request.form['plant_care']
+        })
+        plant_collection.update_one({"_id": ObjectId(plant_id)}, {"$set": plant})
+        flash('Plant updated successfully', 'success')
+        return redirect(url_for('admin_account'))
+    return render_template("admin_update.html", title='Update Plant', plant=plant)
+
+
 # User Account
 @app.route('/user_account', methods=["GET", "POST"])
 @user_logged_in
 def user_account():
     plants = mongo.db.plants.find()
-    records = mongo.db.users_plant_records.find({"user": session['username']})
+    records = mongo.db.users_plant_records.find({"user": get_authenticated_user()})
     return render_template("user_account.html", title='User Account', plants=plants, records=records)
 
 
@@ -132,28 +234,32 @@ def add_plant_record(plant_id):
                 'plant_placement': plant['plant_placement'],
                 'plant_care': plant['plant_care']
             },
-            'date_purchased': request.form['date_purchased'].lower(),
+            'date_purchased': request.form['date_purchased'],
             'water_frequency': request.form['water_frequency'].lower(),
-            'notes_added': request.form['notes_added'].lower()
+            'notes_added': request.form['notes_added']
         })
         flash('Plant recorded successfully', 'success')
         return redirect(url_for('user_account'))
-    return render_template("add_plant_record.html", title='Add Plant Record', plant=plant)
+    return render_template("add_plant_record.html", title='Add Plant Record',
+        plant=plant, watering_frequency=WATERING_FREQUENCY)
 
 
 # Edit User Plant Record
 @app.route('/edit_user_plant_record/<record_id>', methods=["GET", "POST"])
 @user_logged_in
 def edit_user_plant_record(record_id):
-    record = mongo.db.users_plant_records.find_one({"_id": ObjectId(record_id)})
+    users_plant_records = mongo.db.users_plant_records
+    record = users_plant_records.find_one({"_id": ObjectId(record_id)})
     if request.method == 'POST':
         record.update({
-                'water_frequency': request.form['water_frequency'],
-                'notes_added': request.form['notes_added'].lower
+                'water_frequency': request.form['water_frequency'].lower(),
+                'notes_added': request.form['notes_added']
             })
+        users_plant_records.update_one({"_id": ObjectId(record_id)}, {"$set": record})
         flash('Plant record edited successfully', 'success')
         return redirect(url_for('user_account'))
-    return render_template("edit_user_plant_record.html", title='Edit Plant Record', record=record)
+    return render_template("edit_user_plant_record.html", title='Edit Plant Record',
+        record=record, watering_frequency=WATERING_FREQUENCY)
 
 
 # Delete User Plant Record

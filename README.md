@@ -252,11 +252,11 @@ The code and standard styling for the navigation bar, jumbotrons, forms, buttons
 
 ### General guidance from websites:
 * [Code Institute](https://courses.codeinstitute.net/program/FullstackWebDeveloper)
-* [Python](https://www.python.org/),
-* [Jinja](https://palletsprojects.com/p/jinja/),
-* [Stack Overflow](https://stackoverflow.com/),
-* [w3schools.com](https://www.w3schools.com/),
-* [MongoDB](https://docs.mongodb.com/manual/crud/),
+* [Python](https://www.python.org/)
+* [Jinja](https://palletsprojects.com/p/jinja/)
+* [Stack Overflow](https://stackoverflow.com/)
+* [w3schools.com](https://www.w3schools.com/)
+* [MongoDB](https://docs.mongodb.com/manual/crud/)
 * [Flask](https://flask.palletsprojects.com/en/1.1.x/)
 
 ### Specific guidance from website:

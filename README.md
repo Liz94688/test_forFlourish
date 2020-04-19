@@ -1,5 +1,5 @@
 # Flourish At Home
-_Flourish At Home_ is an app designed to provide a small family run business currently selling houseplants within their local community, with the ability to assist and advise their customer base on basic plant care outside of the shop environment.
+_Flourish At Home_ is an app designed to provide a small family run business, currently selling houseplants within their local community, with the ability to assist and advise their customer base on basic plant care outside of the shop environment.
 
 Following the sale of any plant, the owners of the shop will direct their customers towards _Flourish At Home_, highlighting the apps existence and advising the customer on the potential benefits of using the app, with the explanation that this service would be free to any customer purchasing a plant from their shop.
 
@@ -11,7 +11,8 @@ A link to the finished website can be found [here](https://test-flourish.herokua
 
 
 ## UX
-### User Stories
+### User Stories:
+#### Customers
 Through research conducted during the initial design of the _Flourish At Home_ app, interviews were carried out among customers who frequently visited the shop and purchased plants. This was completed in order to establish the customer base, help in the overall design of the app and decide what services and functions were offer to registered users. 
 
 This research helped create the user story listed below.
@@ -29,6 +30,7 @@ As a user of this kind of app, I want to be able to:
 * To be allowed to edit the records I've added, every plant I’ve bought seems to have all these individual quirks, sometimes you can’t remember them all, so it’d be nice to have a place to store all of this information and be able to add to it when I wanted
 * To be able to delete any record, in case I no longer need it anymore
 
+#### Shop Owner
 An interview were also conducted with the owners of the shop, asking them what functionality they would prefer to have control over in the app. The following user story was created in relation to this:
 
 As an administrator of the app, I want to be able to complete the following:
@@ -39,7 +41,7 @@ As an administrator of the app, I want to be able to complete the following:
 * To be able to see what a registered users has access to
 
 ### Wireframes
-A link to photos taken of hand-drawn wireframes for the _Flourish At Home_ app can be found [here]():
+A link to photos taken of hand-drawn wireframes for the _Flourish At Home_ app can be found [here](https://afbeb705-7c1f-4b1d-bbc0-8f7bff603662.ws-eu01.gitpod.io/mini-browser/workspace/test_forFlourish/static/wireframes/IMG_0015.jpg) and [here](https://afbeb705-7c1f-4b1d-bbc0-8f7bff603662.ws-eu01.gitpod.io/mini-browser/workspace/test_forFlourish/static/wireframes/IMG_0016.jpg):
 
 ## Features
 
@@ -90,7 +92,7 @@ Again, the colour scheme and theme continue throughout and are included on this 
 
 Wording is included below the welcome statement, directing users on how them can use the table to find and add their plants.
 
-Table of plants - Clear and concise. This provides basic information on each plant that is easily recognisable to users, as well as being easy to navigate.
+* Table of plants - Clear and concise. This provides basic information on each plant that is easily recognisable to users, as well as being easy to navigate.
 
 The ‘Reference’ included in the first column was specifically based on the user stories collected during the design process. When buying plants in a shop, not all customers recognise the name or can recall the name after purchasing the plant. The local business has considered this and plants are paired with a memorable ‘reference’ to assist customers.
 
@@ -98,11 +100,11 @@ This reference is included on the plant label and receipt when it is bought in t
 
 The table includes a button aligned to each plant, directing the user towards what action to take once they intend to add the plant to their own record.
 
-Jumbotron_ - A jumbotron provides a clear statement and explanation to the user as to where their individual plant records will be displayed, once created. 
+* Jumbotron_ - A jumbotron provides a clear statement and explanation to the user as to where their individual plant records will be displayed, once created. 
 
 In addition to informing the user about how plant records will be displayed, the jumbotron also provides a clear and visual separation between the function of adding a plant at the top of the page and that of displaying the plant records, located at the bottom of the page.
 
-Plant Records - Once created, plant records are displayed below the jumbotron. Each record includes a specific amount of information on the plant for easy user navigation, including the ‘Plant Reference’, ‘Plant Name’, a description of the plant, how often the plant needs to be watered and any notes the user has included.
+* Plant Records - Once created, plant records are displayed below the jumbotron. Each record includes a specific amount of information on the plant for easy user navigation, including the ‘Plant Reference’, ‘Plant Name’, a description of the plant, how often the plant needs to be watered and any notes the user has included.
 
 ‘Edit’ and ‘Delete’ buttons mirror the design of the ‘Add’ button in the Plant Table, providing continuity to the page and user. The ‘Delete’ button has also been clearly marked in an alternative ‘danger’ colour, to communicate its function and consequences to the user if actioned. 
 
@@ -115,12 +117,12 @@ This information can only be access and updated by the Administrator.
 
 Users are encouraged to completed alternative field on the form, including ‘Date Purchased’, ‘Water Frequency’ and Notes sections. 
 
-The ‘Date Purchased’ has a calendar function available to the user that appears when they enter into the field and can be access via a clearly displayed icon on the right-hand side of the field.
+* The ‘Date Purchased’ has a calendar function available to the user that appears when they enter into the field and can be access via a clearly displayed icon on the right-hand side of the field.
 
 
-The ‘Water Frequency’ field has been designed as a drop-down list that appears when the user enters into that field. A placeholder in the field directs the user to pick an option, encouraging them to click on the field initially.
+* The ‘Water Frequency’ field has been designed as a drop-down list that appears when the user enters into that field. A placeholder in the field directs the user to pick an option, encouraging them to click on the field initially.
 
-The ‘Notes’ field is designed with a multiple number of rows to allow the user to place as many notes as they wish to.
+* The ‘Notes’ field is designed with a multiple number of rows to allow the user to place as many notes as they wish to.
 
 A button is included at the end of the form. Once the button has been clicked, the plant is submitted to the user’s collection and the user is re-directed to the User Account Page and a flash message appears directly underneath the navigation bar, updating the user on the successful inclusion of the plant record. The message is centred and easily recognisable to the user.
 
@@ -132,10 +134,17 @@ Once the button has been clicked, the plant record is updated with any new infor
 #### Delete
 This button is clearly placed and designed to stand out on each plant record. The button has been clearly marked in an alternative ‘danger’ colour, to communicate its function and consequences to the user if actioned.
 
-Once pressed the record is immediately deleted and the user is redirected back to the User Account Page.
+Once pressed the record is immediately deleted and the user is redirected back to the User Account page.
 
 #### Administration Only
-Provides functionality to the client - the local business owner running their own plant shop - to add new plants to the collection, as well as updating all existing plant records.
+Provides functionality to the client - the local business owner running their own plant shop - to add new plants to the collection, as well as updating all existing plant records. 
+
+The '/add_admin' route has been designed to create a default admin user.
+Register as Administrator in the following way to navigate the Admin Only pages of the website:
+* Name: admin
+* Email: admin@myself
+* Username: admin
+* Password: admin
 
 #### Admin Acccount
 This page mirrors the User Account in relation to design. The navigation bar mirrors the rest of the app, with the addition a third option for administration purposes only.
@@ -172,10 +181,10 @@ Dependancies: Flask and Flask-PyMongo
 
 The project uses JQuery to simplify DOM manipulation.
 
-### Version Control System: 
+#### Version Control System: 
 Git was used to track the changes made to the site and push them to Github
 
-### Hosting: 
+#### Hosting: 
 Heroku has been used to deploy the website
 
 ## Testing
@@ -199,20 +208,20 @@ The user has the option to complete 3 additional fields on the form - date-purch
 The form can be submitted without all of these fields being completed.
 Once submitted, the user is re-directed to the User Account screen and a message informs them that the plant was recorded successfully.
 
-### Add Plant Form - Administrator
+### Add Plant Form - Administrator:
 Go to the “Admin Add" page
 The administrator has to complete all of the forms fields on this form.
 If the administrator tries to add a new plant without each field being completed, an error message appears, informing the administrator of the error.
 When the administrator submits the form with each of the fields completed, they are re-directed to the Admin Account Page and a message tells them that the new plant was recorded successfully.
 
-### Update Plant Form - User
+### Update Plant Form - User:
 Go to the “Edit User Plant Record” page
 The pre-populated information has already pulled through to the record and cannot be amended by the user.
 The user has the option to edit any of the 3 additional fields on the form - date-purchased, water-frequency and notes.
 The form can be submitted without all of these fields being completed or edited.
 Once submitted, the user is re-directed to the User Account screen and a message informs them that the plant was edited successfully.
 
-### Update Plant Form - Administrator
+### Update Plant Form - Administrator:
 Go to the “Admin Update” page
 The information previously input by the administrator is already included in the form fields.
 The administrator can update any of these fields, however, they cannot leave a field empty.
@@ -237,30 +246,33 @@ The project I created was deployed to Heroku
 * The site was then successfully deployed
 
 ## Credits
-The code for the inclusion of the background image and the code and styling for the card elements used for the individual plant records was taken from the ‘Snippets’ section of [startbootstrap](https://startbootstrap.com/snippets/).
+The code for the inclusion of the background image and the code and styling for the card elements used for the individual plant records was taken from the ‘Snippets’ section of [Start Bootstrap](https://startbootstrap.com/snippets/).
 
 The code and standard styling for the navigation bar, jumbotrons, forms, buttons, table and alerts were taken from [Bootstrap](https://getbootstrap.com/).
 
-** General guidance from websites:
-[Code Institute - course material](https://courses.codeinstitute.net/program/FullstackWebDeveloper)
-[Python](https://www.python.org/),
-[Jinja](https://palletsprojects.com/p/jinja/),
-[Stack](https://stackoverflow.com/),
-[w3schools.com](https://www.w3schools.com/),
-[mongoDB Documentation](https://docs.mongodb.com/manual/crud/),
-[FlaskProjects](https://flask.palletsprojects.com/en/1.1.x/)
+### General guidance from websites:
+* [Code Institute](https://courses.codeinstitute.net/program/FullstackWebDeveloper)
+* [Python](https://www.python.org/),
+* [Jinja](https://palletsprojects.com/p/jinja/),
+* [Stack Overflow](https://stackoverflow.com/),
+* [w3schools.com](https://www.w3schools.com/),
+* [MongoDB](https://docs.mongodb.com/manual/crud/),
+* [Flask](https://flask.palletsprojects.com/en/1.1.x/)
 
-** Specific guidance from website:
-Python - Functools - guidance on creating a function decorator was found [here](https://docs.python.org/3/library/functools.html#functools.wraps),
-Flask - Decorators - guidance and code on how to create a decorator was found [here](https://flask.palletsprojects.com/en/1.1.x/patterns/viewdecorators/),
-Flask - Message Flashing - guidance and code on how to use found [here](https://flask.palletsprojects.com/en/1.1.x/patterns/flashing/#message-flashing-pattern),
+### Specific guidance from website:
+* Python
+Functools - guidance on creating a function decorator was found [here](https://docs.python.org/3/library/functools.html#functools.wraps)
+* Flask
+Decorators - guidance and code on how to create a decorator was found [here](https://flask.palletsprojects.com/en/1.1.x/patterns/viewdecorators/)
+* Flask
+Message Flashing - guidance and code on how to use found [here](https://flask.palletsprojects.com/en/1.1.x/patterns/flashing/#message-flashing-pattern)
 
-** Media - 
+### Media
 The background photo used in this site was obtained from [Pexels](https://www.pexels.com/search/plant/).
 
-** Acknowledgements
+### Acknowledgements
 I received inspiration for this project from the tiny, independent, and local plant shop around the corner from where I live.
 
 All the plant information in the website has been taken from the book ‘The Kew Gardener’s Guide to Growing House Plants’ by Kay Maguire.
 
-Special mention goes to my mentor Guido Cecilia Garcia, for his unlimited amount of guidance and patience while working on this project, as well as helping me the issues I had surrounding pagination.
+Special mention goes to my mentor Guido Cecilia Garcia, for his unlimited amount of guidance and patience while working on this project, as well as helping me with the issues I had surrounding pagination.

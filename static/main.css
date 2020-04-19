@@ -29,7 +29,7 @@
     text-align: center;
     background-color: #EDF6F9;
     border-radius: 2rem;
-    margin: 2rem;
+    margin-top: 2rem;
     padding: 2rem 1rem;
 }
 
@@ -46,7 +46,7 @@
     color: #005059;
 }
 
-.admin-add-plant {
+.admin-add-plant a {
     color: #005059;
     border-color: #005059;
     font-weight: 500;
@@ -69,6 +69,13 @@
 .admin-plant-summary {
     border-radius: 0;
     background-color: #EDF6F9;
+}
+
+.text-right a {
+    color: #005059;
+    border-color: #005059;
+    font-weight: 500;
+    margin-left: 0; 
 }
 
 /* Administration - Admin Add */
@@ -111,6 +118,7 @@
     background-color: #005059;
     color: #EDF6F9;
     border-color: #EDF6F9;
+    margin-left: 0;
 }
 
 /* Administration - Admin Update */
@@ -153,6 +161,7 @@
     background-color: #005059;
     color: #EDF6F9;
     border-color: #EDF6F9;
+    margin-left: 0;
 }
 
 /* Welcome */
@@ -200,7 +209,7 @@
     margin: 1rem;
 }
 
-.register-submit {
+.btn-outline-info {
     color: #EDF6F9;
     border-color: #EDF6F9;
     font-weight: 500;
@@ -243,12 +252,6 @@
 
 .fieldset-login {
     margin: 1rem;
-}
-.login-submit {
-    color: #EDF6F9;
-    border-color: #EDF6F9;
-    font-weight: 500;
-    margin-left: 1rem;
 }
 
 .register-info {
@@ -320,7 +323,6 @@
     color: #005059;
     border-color: #005059;
     font-weight: 400;
-    width: -webkit-fill-available;
 }
 
 /* Jumbotron */
@@ -366,13 +368,17 @@
     padding-top: 10px;
 }
 
+
 .edit-submit {
     color: #005059;
     border-color: #005059;
     font-weight: 500;
+    margin-left: 0;
 }
 
-.delete-submit {
+.btn-outline-danger {
+    color: #dc3545;
+    border-color: #dc3545;
     font-weight: 500;
 }
 
@@ -455,9 +461,7 @@ p.card-text {
 }
 
 .add-plant-submit {
-    color: #EDF6F9;
-    border-color: #EDF6F9;
-    font-weight: 500;
+    margin-left: 0;
 }
 
 /* Edit Plant */
@@ -499,9 +503,7 @@ p.card-text {
 }
 
 .edit-plant-submit {
-    color: #EDF6F9;
-    border-color: #EDF6F9;
-    font-weight: 500;
+    margin-left: 0;
 }
 
 /* Bootstrap overides */

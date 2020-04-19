@@ -51,7 +51,7 @@
 					<p class="card-text">{{record.notes_added}}</p>
 					<div class="user-submit">
 						<a class="btn btn-outline-info edit-submit" href="edit_user_plant_record/{{record._id}}">Edit</a>
-						<a class="btn btn-outline-danger delete-submit" href="{{ url_for('delete_user_plant_record', record_id=record._id) }}">Delete</a>
+						<a class="btn btn-outline-danger" href="{{ url_for('delete_user_plant_record', record_id=record._id) }}">Delete</a>
 					</div>
 				</div>
 			</div>

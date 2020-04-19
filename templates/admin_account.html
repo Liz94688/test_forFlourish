@@ -7,8 +7,8 @@
     <hr>
     <p class="about">This page has been created to help assist you in adding any new plants onto the app, 
         as well as updating any existing plant records.</p>
-    <div>
-        <a class="btn btn-outline-info admin-add-plant" href="{{ url_for('admin_add') }}">Add Plant</a>
+    <div class="admin-add-plant">
+        <a class="btn btn-outline-info" href="{{ url_for('admin_add') }}">Add Plant</a>
     </div>
 </div>
 
@@ -23,6 +23,7 @@
                 <th>Reference</th>
                 <th>Plant Name</th>
                 <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody id="plant-list" class="plant-summary-body">
@@ -30,9 +31,8 @@
             <tr>
                 <td>{{plant.plant_reference}}</td>
                 <td>{{plant.plant_name}}</td>
-                <td class="text-right"><a class="btn btn-outline-primary" href="{{ url_for('admin_update', plant_id=plant._id) }}">Update</a>&nbsp;
-                    <button class="btn btn-outline-danger btn-delete" type="button" data-action="{{ url_for('admin_delete', plant_id=plant._id) }}" data-toggle="modal" data-target="#deletePlantModal">Delete</button>
-                </td>
+                <td class="text-right"><a class="btn btn-outline-info" href="{{ url_for('admin_update', plant_id=plant._id) }}">Update</a></td>
+                <td><button class="btn btn-outline-danger btn-delete" type="button" data-action="{{ url_for('admin_delete', plant_id=plant._id) }}" data-toggle="modal" data-target="#deletePlantModal">Delete</button></td>  
             </tr>
             {% endfor %}
         </tbody>

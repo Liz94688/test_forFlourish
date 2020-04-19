@@ -20,47 +20,29 @@ WATERING_FREQUENCY = ("Daily", "Every other day", "Weekly", "Monthly", "Rarely")
 
 mongo = PyMongo(app)
 
-
-@app.route('/add_admin')
-def add_admin():
-    users = mongo.db.users
-    existing_user = users.find_one({'username': 'admin'})
-    if not existing_user:
-        # Password
-        users.insert({
-            'name': 'admin',
-            'email': 'admin@myself',
-            'username': 'admin',
-            'password': 'admin',
-            'is_admin': True
-        })
-        flash('User account successfully registered', 'success')
-        return redirect(url_for('login_user'))
-    return render_template("welcome_page.html")
-
-
-@app.route('/populate')
-def populate():
-    plants = [
-       {'plant_reference': 'plant_ref1', 'plant_name': 'plant_name', 'plant_description': 'plant_description', 'plant_placement': 'plant_placement', 'plant_care': 'plant_care'},
-       {'plant_reference': 'plant_ref2', 'plant_name': 'plant_name', 'plant_description': 'plant_description', 'plant_placement': 'plant_placement', 'plant_care': 'plant_care'},
-       {'plant_reference': 'plant_ref3', 'plant_name': 'plant_name', 'plant_description': 'plant_description', 'plant_placement': 'plant_placement', 'plant_care': 'plant_care'},
-       {'plant_reference': 'plant_ref4', 'plant_name': 'plant_name', 'plant_description': 'plant_description', 'plant_placement': 'plant_placement', 'plant_care': 'plant_care'},
-       {'plant_reference': 'plant_ref5', 'plant_name': 'plant_name', 'plant_description': 'plant_description', 'plant_placement': 'plant_placement', 'plant_care': 'plant_care'},
-       {'plant_reference': 'plant_ref6', 'plant_name': 'plant_name', 'plant_description': 'plant_description', 'plant_placement': 'plant_placement', 'plant_care': 'plant_care'},
-       {'plant_reference': 'plant_ref7', 'plant_name': 'plant_name', 'plant_description': 'plant_description', 'plant_placement': 'plant_placement', 'plant_care': 'plant_care'},
-    ]
-    for plant in plants:
-        plant_collection = mongo.db.plants
-        plant_collection.insert({
-            'plant_reference': plant['plant_reference'],
-            'plant_name': request.form['plant_name'],
-            'plant_description': request.form['plant_description'],
-            'plant_placement': request.form['plant_placement'],
-            'plant_care': request.form['plant_care']
-        })
-    flash('User account successfully registered', 'success')
-    return redirect(url_for('login_user'))
+# Populate
+# @app.route('/populate')
+# def populate():
+#     plants = [
+#        {'plant_reference': 'plant_ref1', 'plant_name': 'plant_name', 'plant_description': 'plant_description', 'plant_placement': 'plant_placement', 'plant_care': 'plant_care'},
+#        {'plant_reference': 'plant_ref2', 'plant_name': 'plant_name', 'plant_description': 'plant_description', 'plant_placement': 'plant_placement', 'plant_care': 'plant_care'},
+#        {'plant_reference': 'plant_ref3', 'plant_name': 'plant_name', 'plant_description': 'plant_description', 'plant_placement': 'plant_placement', 'plant_care': 'plant_care'},
+#        {'plant_reference': 'plant_ref4', 'plant_name': 'plant_name', 'plant_description': 'plant_description', 'plant_placement': 'plant_placement', 'plant_care': 'plant_care'},
+#        {'plant_reference': 'plant_ref5', 'plant_name': 'plant_name', 'plant_description': 'plant_description', 'plant_placement': 'plant_placement', 'plant_care': 'plant_care'},
+#        {'plant_reference': 'plant_ref6', 'plant_name': 'plant_name', 'plant_description': 'plant_description', 'plant_placement': 'plant_placement', 'plant_care': 'plant_care'},
+#        {'plant_reference': 'plant_ref7', 'plant_name': 'plant_name', 'plant_description': 'plant_description', 'plant_placement': 'plant_placement', 'plant_care': 'plant_care'},
+#     ]
+#     for plant in plants:
+#         plant_collection = mongo.db.plants
+#         plant_collection.insert({
+#             'plant_reference': plant['plant_reference'],
+#             'plant_name': request.form['plant_name'],
+#             'plant_description': request.form['plant_description'],
+#             'plant_placement': request.form['plant_placement'],
+#             'plant_care': request.form['plant_care']
+#         })
+#     flash('User account successfully registered', 'success')
+#     return redirect(url_for('login_user'))
 
 
 # Welcome Page
@@ -79,7 +61,6 @@ def register_user():
         existing_user = users.find_one({'username': username})
 
         if not existing_user:
-            # Password
             users.insert({
                 'name': request.form['name'],
                 'email': request.form['email'].lower(),
@@ -155,11 +136,30 @@ def logout():
     return redirect(url_for('welcome_page'))
 
 
+# Admin User
+@app.route('/add_admin')
+def add_admin():
+    users = mongo.db.users
+    existing_user = users.find_one({'username': 'admin'})
+    if not existing_user:
+        users.insert({
+            'name': 'admin',
+            'email': 'admin@myself',
+            'username': 'admin',
+            'password': 'admin',
+            'is_admin': True
+        })
+        flash('User account successfully registered', 'success')
+        return redirect(url_for('login_user'))
+    return render_template("welcome_page.html")
+
+
 # Admin user only - account
 @app.route('/admin_account', methods=["GET", "POST"])
 @user_logged_in
 def admin_account():
-    return render_template("admin_account.html", title='Administration Account')
+    plants = mongo.db.plants.find()
+    return render_template("admin_account.html", title='Administration Account', plants=plants)
 
 
 # Admin user only - add plant
@@ -180,12 +180,12 @@ def admin_add():
     return render_template("admin_add.html", title="Add Plant")
 
 
-# Admin user only - search existing
-@app.route('/admin_search', methods=["GET", "POST"])
-@user_logged_in
-def admin_search():
-    plants = mongo.db.plants.find()
-    return render_template("admin_search.html", title='Search Plants', plants=plants)
+# # Admin user only - search existing
+# @app.route('/admin_search', methods=["GET", "POST"])
+# @user_logged_in
+# def admin_search():
+#     plants = mongo.db.plants.find()
+#     return render_template("admin_search.html", title='Search Plants', plants=plants)
 
 
 # Admin user only - update plant

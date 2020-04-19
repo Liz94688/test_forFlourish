@@ -1,16 +1,43 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="jumbotron admin-welcome">
-		<h1>Welcome to the Flourish At Home Administration Account</h1>
-	<hr>
-	<p class="about">This has been created to help assist you in adding any new plants onto the application, 
-        as well as updating any existing plants already record.</p>
-	<p class="admin_direction">Please start by choosing one of the options below.</p>
-    <div class="container add_plant">
-        <a class="btn btn-outline-info add-plant" href="{{ url_for('admin_add') }}">Add Plant</a>
+<div class="container admin-account">
+    <div class="jumbotron admin-welcome">
+            <h1>Administration Account</h1>
+        <hr>
+        <p class="about">This has been created to help assist you in adding any new plants onto the application, 
+            as well as updating any existing plants already record.</p>
+        <div class="container add_plant">
+            <a class="btn btn-outline-info admin-add-plant" href="{{ url_for('admin_add') }}">Add Plant</a>
+        </div>
     </div>
-    <div class="container update_plant">
-        <a class="btn btn-outline-info add-plant" href="{{ url_for('admin_search') }}">Update Existing Plant</a>
+
+    <div class="container admin_search">
+        <div class="container admin_search">
+            <h1>Search Existing Plants</h1>
+        </div>
+
+        <!-- Table listing plant collection -->
+        <div class="container">
+            <table class="table plant-summary admin-plant-container">
+                <thead class="plant-summary-header">
+                    <tr>
+                        <th>Reference</th>
+                        <th>Plant Name</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody class="plant-summary-body">
+                    {% for plant in plants %}
+                    <tr>
+                        <td>{{plant.plant_reference}}</td>
+                        <td>{{plant.plant_name}}</td>
+                        <td><a class="btn btn-outline-info admin-add-plant"
+                                href="{{ url_for('admin_update', plant_id=plant._id) }}">Update</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 {% endblock %}

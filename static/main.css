@@ -18,6 +18,56 @@ body {
     color: #EDF6F9;
 }
 
+/* Administration - Admin Account */
+.admin-welcome {
+    text-align: center;
+    background-color: #EDF6F9;
+    border-radius: 2rem;
+    margin: 2rem;
+    padding: 2rem 1rem;
+}
+
+.admin-welcome h1 {
+    margin-top: 0.5rem;
+    font-weight: 300;
+    color: #005059;
+}
+
+.admin-welcome p.about {
+    margin-top: 1rem;
+    font-weight: 300;
+    font-size: 1rem;
+    color: #005059;
+}
+
+/* Administration - Admin Account Plant Table*/
+.admin_search {
+    background-color: #005059;
+    color: #EDF6F9;
+    font-weight: 200;
+    text-align: center;
+}
+
+.admin_search h1 {
+    font-weight: 100;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}    
+
+.admin-plant-container {
+    padding: 2rem;
+    display: table;
+}
+
+.admin-add-plant {
+    color: #005059;
+    border-color: #005059;
+    font-weight: 500;
+    display: inline;
+}
+/* Administration - Admin Add */
+
+
 /* Welcome */
 .jumbotron-welcome {
     text-align: center;

@@ -1,8 +1,9 @@
 # Importing Modules
 import os
+import math
 from flask import (
     Flask, render_template, flash, redirect, request, url_for, session)
-from flask_pymongo import PyMongo
+from flask_pymongo import PyMongo, pymongo
 from bson.objectid import ObjectId
 from functools import wraps
 
@@ -19,6 +20,83 @@ app.config['SECRET_KEY'] = '314340f218da90b32caf021224f26824'
 WATERING_FREQUENCY = ("Daily", "Every other day", "Weekly", "Monthly", "Rarely")
 
 mongo = PyMongo(app)
+
+# Pagination and sorting
+PAGE_SIZE = 3
+KEY_PAGE_SIZE = 'page_size'
+KEY_PAGE_NUMBER = 'page_number'
+KEY_TOTAL = 'total'
+KEY_PAGE_COUNT = 'page_count'
+KEY_ENTITIES = 'items'
+KEY_NEXT = 'next_uri'
+KEY_PREV = 'prev_uri'
+KEY_WORD_FIND = 'word_find'
+KEY_ORDER_BY = 'order_by'
+KEY_ORDER = 'order'
+
+
+def get_paginated_list(entity, query={}, **params):
+    """
+    Retrieve list of items of any type based on the entity parameter and
+    search by specifying a query dictionary.
+    Pagination parameters are passed using the params as key word dictionary.
+    """
+    page_size = int(params.get(KEY_PAGE_SIZE, PAGE_SIZE))
+    page_number = int(params.get(KEY_PAGE_NUMBER, 1))
+    order_by = params.get(KEY_ORDER_BY, '_id')
+    order = params.get(KEY_ORDER, 'asc')
+    order = pymongo.ASCENDING if order == 'asc' else pymongo.DESCENDING
+    if page_number < 1:
+        page_number = 1
+    offset = (page_number - 1) * page_size
+    items = []
+    word_find = ''
+    if KEY_WORD_FIND in params:
+        word_find = params.get(KEY_WORD_FIND)
+        if len(word_find.split()) > 0:
+            entity.create_index([("$**", 'text')])
+            result = entity.find({'$text': {'$search': word_find}})
+            items = result.sort(order_by, order).skip(offset).limit(page_size)
+        else:
+            items = entity.find().sort(
+                order_by, order
+            ).skip(offset).limit(page_size)
+    else:
+        items = entity.find(query).sort(order_by, order).skip(
+            offset).limit(page_size)
+    total_items = items.count()
+    if page_size > total_items:
+        page_size = total_items
+    if page_number < 1:
+        page_number = 1
+    if page_size:
+        page_count = math.ceil(total_items / page_size)
+    else:
+        page_count = 0
+    if page_number > page_count:
+        page_number = page_count
+    next_uri = {
+        KEY_PAGE_SIZE: page_size,
+        KEY_PAGE_NUMBER: page_number + 1
+    } if page_number < page_count else None
+    prev_uri = {
+        KEY_PAGE_SIZE: page_size,
+        KEY_PAGE_NUMBER: page_number - 1
+    } if page_number > 1 else None
+
+    return {
+        KEY_TOTAL: total_items,
+        KEY_PAGE_SIZE: page_size,
+        KEY_PAGE_COUNT: page_count,
+        KEY_PAGE_NUMBER: page_number,
+        KEY_NEXT: next_uri,
+        KEY_PREV: prev_uri,
+        KEY_WORD_FIND: word_find,
+        KEY_ORDER_BY: order_by,
+        KEY_ORDER: order,
+        KEY_ENTITIES: items
+        }
+
 
 # Populate
 # @app.route('/populate')
@@ -47,6 +125,9 @@ mongo = PyMongo(app)
 # Admin User
 @app.route('/add_admin')
 def add_admin():
+    """
+    Route to automatically create the default admin user.
+    """
     users = mongo.db.users
     existing_user = users.find_one({'username': 'admin'})
     if not existing_user:
@@ -154,11 +235,13 @@ def logout():
 
 
 # Admin user only - account
-@app.route('/admin_account', methods=["GET", "POST"])
+@app.route('/admin_account', methods=["GET"])
 @user_logged_in
 def admin_account():
-    plants = mongo.db.plants.find()
-    return render_template("admin_account.html", title='Administration Account', plants=plants)
+    plants = get_paginated_list(mongo.db.plants, **request.args.to_dict())
+    return render_template("admin_account.html",
+        title='Administration Account',
+        result=plants)
 
 
 # Admin user only - add plant
@@ -197,6 +280,14 @@ def admin_update(plant_id):
         flash('Plant updated successfully', 'success')
         return redirect(url_for('admin_account'))
     return render_template("admin_update.html", title='Update Plant', plant=plant)
+
+
+@app.route('/admin_delete/<plant_id>', methods=["POST"])
+@user_logged_in
+def admin_delete(plant_id):
+    mongo.db.plants.remove({"_id": ObjectId(plant_id)})
+    flash('Plant deleted successfully', 'success')
+    return redirect(url_for('admin_account'))
 
 
 # User Account

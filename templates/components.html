@@ -1,0 +1,42 @@
+{%- macro pagination(url, result) -%}
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+    {% if result['prev_uri'] is none %}
+        <li class="page-item disabled">
+            <a class="page-link" href="#!" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+            </a>
+        </li>
+    {% else %}
+        <li class="page-item">
+            <a class="page-link" aria-label="Previous" href="{{ url }}?page_number={{result['prev_uri']['page_number']}}&page_size={{result['prev_uri']['page_size']}}&word_find={{result['word_find']}}&order_by={{result['order_by']}}&order={{result['order']}}">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+            </a>
+        </li>
+    {% endif %} 
+    {% for page in range(1, result['page_count'] + 1) %} 
+        {% if result['page_number'] == page %}
+        <li class="page-item active">
+        {% else %}
+        <li class="page-item">
+        {% endif %}
+            <a class="page-link" href="{{ url }}?page_number={{ page }}&page_size={{ result['page_size'] }}&word_find={{ result['word_find'] }}&order_by={{ result['order_by'] }}&order={{ result['order'] }}">{{ page }}</a>
+        </li>
+    {% endfor %} 
+    {% if result['next_uri'] is none %}
+        <li class="page-item disabled"><a class="page-link" href="#!" aria-label="Next"><span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span></a></li>
+        {% else %}
+        <li class="page-item">
+            <a class="page-link" href="{{ url }}?page_number={{result['next_uri']['page_number']}}&page_size={{ result['next_uri']['page_size'] }}&word_find={{ result['word_find'] }}&order_by={{result['order_by']}}&order={{result['order']}}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+            </a>
+        </li>
+    {% endif %}
+    </ul>
+</nav>
+
+{%- endmacro -%}

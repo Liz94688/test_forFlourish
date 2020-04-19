@@ -1,10 +1,7 @@
 /* Base */
-body {
-    background-color: #83C5BE;
-}
-
 .alert {
     text-align: center;
+    border-radius: 0;
 }
 
 /* Navbar */
@@ -12,6 +9,7 @@ body {
     background-color: #005059;
     padding: .9rem 1rem;
     font-weight: 300;
+    border-bottom: 6px solid #FFDDD2;
 }
 
 .navbar-nav li a {
@@ -267,7 +265,7 @@ body {
 .user-account-plant-record {
     background-color: #EDF6F9;
     color: #005059;
-    border: 3px solid #005059;
+    border: 2px solid #FFDDD2;
 }
 
 .user-plant-record {
@@ -276,7 +274,6 @@ body {
 
 .user-submit {
     padding-top: 10px;
-    text-align: center;
 }
 
 .edit-submit {

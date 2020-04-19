@@ -44,6 +44,23 @@ mongo = PyMongo(app)
 #     flash('User account successfully registered', 'success')
 #     return redirect(url_for('login_user'))
 
+# Admin User
+@app.route('/add_admin')
+def add_admin():
+    users = mongo.db.users
+    existing_user = users.find_one({'username': 'admin'})
+    if not existing_user:
+        users.insert({
+            'name': 'admin',
+            'email': 'admin@myself',
+            'username': 'admin',
+            'password': 'admin',
+            'is_admin': True
+        })
+        flash('User account successfully registered', 'success')
+        return redirect(url_for('login_user'))
+    return render_template("welcome_page.html")
+
 
 # Welcome Page
 @app.route('/')
@@ -136,24 +153,6 @@ def logout():
     return redirect(url_for('welcome_page'))
 
 
-# Admin User
-@app.route('/add_admin')
-def add_admin():
-    users = mongo.db.users
-    existing_user = users.find_one({'username': 'admin'})
-    if not existing_user:
-        users.insert({
-            'name': 'admin',
-            'email': 'admin@myself',
-            'username': 'admin',
-            'password': 'admin',
-            'is_admin': True
-        })
-        flash('User account successfully registered', 'success')
-        return redirect(url_for('login_user'))
-    return render_template("welcome_page.html")
-
-
 # Admin user only - account
 @app.route('/admin_account', methods=["GET", "POST"])
 @user_logged_in
@@ -178,14 +177,6 @@ def admin_add():
         flash('Plant recorded successfully', 'success')
         return redirect(url_for('admin_account'))
     return render_template("admin_add.html", title="Add Plant")
-
-
-# # Admin user only - search existing
-# @app.route('/admin_search', methods=["GET", "POST"])
-# @user_logged_in
-# def admin_search():
-#     plants = mongo.db.plants.find()
-#     return render_template("admin_search.html", title='Search Plants', plants=plants)
 
 
 # Admin user only - update plant
@@ -217,7 +208,7 @@ def user_account():
     return render_template("user_account.html", title='User Account', plants=plants, records=records)
 
 
-# Add Plant Record
+# User Account - Add Plant Record
 @app.route('/add_plant_record/<plant_id>', methods=['GET', 'POST'])
 @user_logged_in
 def add_plant_record(plant_id):
@@ -244,7 +235,7 @@ def add_plant_record(plant_id):
         plant=plant, watering_frequency=WATERING_FREQUENCY)
 
 
-# Edit User Plant Record
+# User Account - Edit User Plant Record
 @app.route('/edit_user_plant_record/<record_id>', methods=["GET", "POST"])
 @user_logged_in
 def edit_user_plant_record(record_id):
@@ -262,7 +253,7 @@ def edit_user_plant_record(record_id):
         record=record, watering_frequency=WATERING_FREQUENCY)
 
 
-# Delete User Plant Record
+# User Account - Delete User Plant Record
 @app.route('/delete_user_plant_record/<record_id>', methods=["GET", "POST"])
 @user_logged_in
 def delete_user_plant_record(record_id):

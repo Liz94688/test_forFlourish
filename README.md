@@ -139,10 +139,7 @@ Once pressed the record is immediately deleted and the user is redirected back t
 #### Administration Only
 Provides functionality to the client - the local business owner running their own plant shop - to add new plants to the collection, as well as updating all existing plant records. 
 
-The '/add_admin' route has been designed to create a default admin user.
-Register as Administrator in the following way to navigate the Admin Only pages of the website:
-* Name: admin
-* Email: admin@myself
+The '/add_admin' route has been designed to create a default admin user. Login in as the Administrator in the following way to navigate the Admin Only pages of the website:
 * Username: admin
 * Password: admin
 

@@ -15,7 +15,7 @@ app = Flask(__name__)
 # In development the environmental variables are saved on the env.py and in production
 # the environmental variables are saved on the Config Var in Heroku
 app.config["MONGO_DBNAME"] = os.environ.get('MONGO_DBNAME')
-app.config['MONGO_URI'] = os.environ.get('MONGODB_URI')
+app.config['MONGO_URI'] = os.environ.get('MONGO_URI')
 
 # secret key needed to create session cookies
 app.secret_key = os.environ.get('SECRET_KEY')

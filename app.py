@@ -1,5 +1,6 @@
 # Importing Modules
 import os
+# import env
 import math
 from flask import (
     Flask, render_template, flash, redirect, request, url_for, session)
@@ -11,11 +12,14 @@ from functools import wraps
 # Declaring App Name
 app = Flask(__name__)
 
+# In development the environmental variables are saved on the env.py and in production
+# the environmental variables are saved on the Config Var in Heroku
+app.config["MONGO_DBNAME"] = os.environ.get('MONGO_DBNAME')
+app.config['MONGO_URI'] = os.environ.get('MONGODB_URI')
 
-# Configure MongoDB
-app.config["MONGO_DBNAME"] = 'test_forFlourish'
-app.config["MONGO_URI"] = 'mongodb+srv://root:r00tUser@myfirstcluster-suguw.mongodb.net/test_forFlourish?retryWrites=true&w=majority'
-app.config['SECRET_KEY'] = '314340f218da90b32caf021224f26824'
+# secret key needed to create session cookies
+app.secret_key = os.environ.get('SECRET_KEY')
+
 
 WATERING_FREQUENCY = ("Daily", "Every other day", "Weekly", "Monthly", "Rarely")
 

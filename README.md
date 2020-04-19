@@ -95,7 +95,7 @@ Again, the colour scheme and theme continue throughout and are included on this 
 
 Wording is included below the welcome statement, directing users on how them can use the table to find and add their plants.
 
-    _Table of plants_ - Clear and concise. This provides basic information on each plant that is easily recognisable to users, as well as being easy to navigate. 
+*Table of plants - Clear and concise. This provides basic information on each plant that is easily recognisable to users, as well as being easy to navigate. 
 
 The ‘Reference’ included in the first column was specifically based on the user stories collected during the design process. When buying plants in a shop, not all customers recognise the name or can recall the name after purchasing the plant. The local business has considered this and plants are paired with a memorable ‘reference’ to assist customers.
 
@@ -103,11 +103,11 @@ This reference is included on the plant label and receipt when it is bought in t
 
 The table includes a button aligned to each plant, directing the user towards what action to take once they intend to add the plant to their own record.
 
-    _Jumbotron_ - A jumbotron provides a clear statement and explanation to the user as to where their individual plant records will be displayed, once created. 
+*Jumbotron - A jumbotron provides a clear statement and explanation to the user as to where their individual plant records will be displayed, once created. 
 
 In addition to informing the user about how plant records will be displayed, the jumbotron also provides a clear and visual separation between the function of adding a plant at the top of the page and that of displaying the plant records, located at the bottom of the page.
 
-    _Plant Records_ - Once created, plant records are displayed below the jumbotron. Each record includes a specific amount of information on the plant for easy user navigation, including the ‘Plant Reference’, ‘Plant Name’, a description of the plant, how often the plant needs to be watered and any notes the user has included.
+*Plant Records - Once created, plant records are displayed below the jumbotron. Each record includes a specific amount of information on the plant for easy user navigation, including the ‘Plant Reference’, ‘Plant Name’, a description of the plant, how often the plant needs to be watered and any notes the user has included.
 
 ‘Edit’ and ‘Delete’ buttons mirror the design of the ‘Add’ button in the Plant Table, providing continuity to the page and user. The ‘Delete’ button has also been clearly marked in an alternative ‘danger’ colour, to communicate its function and consequences to the user if actioned. 
 
@@ -119,6 +119,7 @@ The first section of the form is already pre-populated with information input by
 
 This information can only be access and updated by the Administrator.
 
+
 Users are encouraged to completed alternative field on the form, including ‘Date Purchased’, ‘Water Frequency’ and Notes sections. 
 
 *The ‘Date Purchased’ has a calendar function available to the user that appears when they enter into the field and can be access via a clearly displayed icon on the right-hand side of the field.
@@ -126,6 +127,7 @@ Users are encouraged to completed alternative field on the form, including ‘Da
 *The ‘Water Frequency’ field has been designed as a drop-down list that appears when the user enters into that field. A placeholder in the field directs the user to pick an option, encouraging them to click on the field initially.
 
 *The ‘Notes’ field is designed with a multiple number of rows to allow the user to place as many notes as they wish to.
+
 
 A button is included at the end of the form. Once the button has been clicked, the plant is submitted to the user’s collection and the user is re-directed to the User Account Page and a flash message appears directly underneath the navigation bar, updating the user on the successful inclusion of the plant record. The message is centred and easily recognisable to the user.
 
@@ -183,5 +185,5 @@ User Account Page - Table in User Account - redesign as a dropdown list of some 
 ## Technologies Used
 HTML, CSS, Python, Flask, Bootstrap
 
-###JQuery
+### JQuery
 The project uses JQuery to simplify DOM manipulation.

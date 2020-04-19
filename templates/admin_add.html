@@ -1,50 +1,39 @@
 {% extends 'base.html' %}
 {% block content %}
 <!-- Add Plant -->
+<div class="container admin_add_header">
+    <h1>Add Plant</h1>
+    <p class="about">Please use this page to add any new plants onto the app.</p>
+</div>
+
 <div class="container admin_add">
-	<div class="container admin_add_header">
-		<h1>Add Plant</h1>
-	</div>
-    
-    <div class="container admin_add">
-        <form method="POST" action="{{ url_for('admin_add') }}" autocomplete="off">
-            <div class="form-group">
-                <label for="plant_reference">Plant Reference</label>
-                <input type="text" class="form-control" name="plant_reference" required>
-            </div>
-            <div class="form-group">
-                <label for="plant_name">Plant Name</label>
-                <input type="text" class="form-control" name="plant_name" required>
-            </div>
-            <div class="form-group">
-                <label for="plant_description">Plant Description</label>
-                <textarea type="text" class="form-control" name="plant_description" rows="3" required></textarea> 
-                <!-- <input type="text" class="form-control" name="plant_description"> -->
-            </div>
-            <div class="form-group">
-                <label for="plant_placement">Plant Placement</label>
-                <textarea type="text" class="form-control" name="plant_placement" rows="3" required></textarea> 
-                <!-- <input type="text" class="form-control" name="plant_placement"> -->
-            </div>
-            <div class="form-group">
-                <label for="plant_care">Plant Care</label>
-                <textarea type="text" class="form-control" name="plant_care" rows="3" required></textarea> 
-                <!-- <input type="text" class="form-control" name="plant_care"> -->
-            </div>
-            <div class="form-group">
-                <input type="submit" class="btn btn-outline-info admin-add-submit" value="Submit">
-            </div>
-        </form>
-    </div>
+    <form method="POST" action="{{ url_for('admin_add') }}" class="admin-add-form" autocomplete="off">
+        <div class="form-group">
+            <label for="plant_reference">Plant Reference</label>
+            <input type="text" class="form-control" name="plant_reference" required>
+        </div>
+        <div class="form-group">
+            <label for="plant_name">Plant Name</label>
+            <input type="text" class="form-control" name="plant_name" required>
+        </div>
+        <div class="form-group">
+            <label for="plant_description">Plant Description</label>
+            <textarea type="text" class="form-control" name="plant_description" rows="3" required></textarea> 
+            <!-- <input type="text" class="form-control" name="plant_description"> -->
+        </div>
+        <div class="form-group">
+            <label for="plant_placement">Plant Placement</label>
+            <textarea type="text" class="form-control" name="plant_placement" rows="3" required></textarea> 
+            <!-- <input type="text" class="form-control" name="plant_placement"> -->
+        </div>
+        <div class="form-group">
+            <label for="plant_care">Plant Care</label>
+            <textarea type="text" class="form-control" name="plant_care" rows="3" required></textarea> 
+            <!-- <input type="text" class="form-control" name="plant_care"> -->
+        </div>
+        <div class="form-group admin-add-submit">
+            <input type="submit" class="btn btn-outline-info" value="Submit">
+        </div>
+    </form>
 </div>
 {% endblock %}
-
-
-
-
-
-
-
-
-
-plant_care

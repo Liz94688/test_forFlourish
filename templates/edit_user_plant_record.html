@@ -3,7 +3,7 @@
 <!-- Edit Plant -->
 <div class="container edit-user-plant-record">
     <div class="container edit-header">
-	    <h2>Edit Plant Record</h2>
+	    <h1>Edit Plant Record</h1>
     </div>
 	<!-- First fill in the fields with the data already held -->
 	<div class="container col-12 record-data">
@@ -24,7 +24,7 @@
             <div class="form-group">
                 <label for="water_frequency">Water Frequency</label>
                 <div>
-                    <select class="form-control" name="water_frequency" id="water_frequency" required>
+                    <select class="form-control edit-frequency" name="water_frequency" id="water_frequency" required>
                         {% for value in watering_frequency %}
                             {% if record.water_frequency == value.lower() %}
                                 <option value="{{ value }}" selected>{{ value }}</option>
@@ -39,7 +39,7 @@
                 <label for="notes_added">Notes</label>
                 <input type="text" name="notes_added" class="form-control edited-notes" value="{{record.notes_added}}">
             </div>
-			<div class="form-group">
+			<div class="form-group edit-button">
 				<input type="submit" class="btn btn-outline-info edit-plant-submit" value="Submit">
             </div>
 		</form>
